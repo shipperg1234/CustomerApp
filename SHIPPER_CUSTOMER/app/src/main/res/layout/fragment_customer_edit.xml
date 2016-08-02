@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".CustomerEdit"
+    style="@style/outer_layout">
+    <LinearLayout
+        style="@style/vertical_LL">
+        <LinearLayout
+            style="@style/horizontal_LL.sm.2"></LinearLayout>
+        <LinearLayout
+            style="@style/horizontal_LL.sm.8">
+            <LinearLayout
+                style="@style/vertical_LL">
+                <LinearLayout
+                    style="@style/horizontal_LL.sm.3"
+                    android:gravity="center">
+                    <EditText
+                        style="@style/edit_text.name"
+                        android:hint="@string/hint_name"
+                        android:id="@+id/name" />
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/horizontal_LL.sm.3"
+                    android:gravity="center">
+                    <EditText
+                        style="@style/edit_text.email"
+                        android:hint="@string/hint_email"
+                        android:id="@+id/email" />
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/horizontal_LL.sm.3"
+                    android:gravity="center">
+                    <EditText
+                        style="@style/edit_text.address"
+                        android:hint="@string/hint_postal_address"
+                        android:id="@+id/address" />
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/horizontal_LL.sm.3"
+                    android:gravity="center">
+                    <Button
+                        style="@style/normal_button"
+                        android:text="@string/button_text_update"
+                        android:id="@+id/frag_next_button"
+                        android:background="@drawable/abc_button_background"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/horizontal_LL.sm.2">
+        </LinearLayout>
+    </LinearLayout>
+
+
+</FrameLayout>

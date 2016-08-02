@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- default state -->
+    <item android:state_enabled="true" android:state_pressed="false" android:state_focused="false">
+        <shape>
+            <solid android:color="@color/dark_green"/>
+            <corners android:radius="@dimen/corner_radius"/>
+            <stroke android:width="@dimen/stroke_width" android:color="@color/border_gray"/>
+        </shape>
+    </item>
+    <!-- selected state -->
+    <item android:state_enabled="true" android:state_pressed="true" android:state_focused="false">
+        <shape>
+            <solid android:color="@color/light_green"/>
+            <corners android:radius="@dimen/corner_radius"/>
+            <stroke android:width="@dimen/stroke_width" android:color="@color/border_gray"/>
+        </shape>
+    </item>
+    <!-- focused state -->
+    <item android:state_enabled="true" android:state_pressed="false" android:state_focused="true" >
+        <shape >
+            <solid android:color="@color/middle_green"/>
+            <corners android:radius="@dimen/corner_radius"/>
+            <stroke android:width="@dimen/stroke_width" android:color="@color/border_gray"/>
+        </shape>
+    </item>
+    <!-- disabled state -->
+    <item android:state_enabled="false" android:state_pressed="false" android:state_focused="false" >
+        <shape >
+            <solid android:color="@color/light_green"/>
+            <corners android:radius="@dimen/corner_radius"/>
+            <stroke android:width="@dimen/stroke_width" android:color="@color/border_gray"/>
+        </shape>
+    </item>
+</selector>

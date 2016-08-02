@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="crn_no" />
+    <item type="id" name="driver_name" />
+    <item type="id" name="driver_mobile_no" />
+    <item type="id" name="vehicle_type" />
+    <item type="id" name="large_text" />
+    <item type="id" name="loader_string_id" />
+</resources>

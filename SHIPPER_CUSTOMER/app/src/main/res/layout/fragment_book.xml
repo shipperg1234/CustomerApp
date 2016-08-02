@@ -1,0 +1,74 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true"
+    tools:context=".Book">
+    <LinearLayout style="@style/vertical_LL">
+        <LinearLayout
+            style="@style/horizontal_LL.sm.9"
+            android:id="@+id/map"
+            >
+        </LinearLayout>
+        <LinearLayout
+            style="@style/horizontal_LL.sm.3"
+            android:id="@+id/lower_view">
+            <LinearLayout
+                style="@style/vertical_LL">
+                <LinearLayout
+                    style="@style/horizontal_LL.sm.2">
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="none"
+                        >
+                        <RadioGroup
+                            style="@style/horizontal_LL"
+                            android:id="@+id/check_box_selector"
+                            android:gravity="center"
+                            >
+
+                            <!--<RadioButton android:id="@+id/checkbox2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:button="@drawable/abc_checkbox_vehicle_1"
+                                />
+                            <RadioButton android:id="@+id/checkbox3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:button="@drawable/abc_checkbox_vehicle_1"
+                                />
+                            <RadioButton android:id="@+id/checkbox4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:button="@drawable/abc_checkbox_vehicle_1"
+                                />-->
+                        </RadioGroup>
+                    </HorizontalScrollView>
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/horizontal_LL.sm.1">
+                    <Button
+                        style="@style/flat_button"
+                        android:text="@string/button_text_book_later"
+                        android:id="@+id/book_later" />
+                    <View
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/middle_green" />
+                    <Button
+                        style="@style/flat_button"
+                        android:text="@string/button_text_book_now"
+                        android:id="@+id/book_now" />
+                    </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            style="@style/horizontal_LL.sm.1"
+            android:visibility="gone"
+            android:gravity="center"
+            android:id="@+id/error_message">
+        </TextView>
+    </LinearLayout>
+</FrameLayout>

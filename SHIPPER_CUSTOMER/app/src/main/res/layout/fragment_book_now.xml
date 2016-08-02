@@ -1,0 +1,84 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="in.co.theshipper.www.shipper_customer.BookNow">
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        style="@style/vertical_LL">
+        <LinearLayout
+            style="@style/horizontal_LL.sm.4"
+            android:gravity="center">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:elevation="12dp"
+                android:id="@+id/driver_image"
+                app:cardCornerRadius="60dp"
+                android:layout_centerHorizontal="true"
+                android:innerRadius="0dp"
+                android:shape="ring"
+                android:thicknessRatio="1.9"
+                android:layout_above="@+id/driver_mobile_no"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="@color/dark_green"
+                android:src="@drawable/add_material_image_icon"
+                android:id="@+id/material_image" />
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/horizontal_LL.sm.1"
+            android:layout_marginBottom="@dimen/activity_vertical_margin">
+            <TextView
+                style="@style/vertical_LL.sm.2"
+                android:text="Weight :"
+                android:id="@+id/truck"/>
+            <LinearLayout
+                style="@style/vertical_LL.sm.4"
+                android:background="@color/LightGrey">
+                <Spinner
+                    android:gravity="center"
+                    android:id="@+id/weight_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/horizontal_LL.sm.2">
+            <LinearLayout
+                style="@style/edittext_fragment"
+                android:id="@+id/pickup_container"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/horizontal_LL.sm.2">
+            <LinearLayout
+                style="@style/edittext_fragment"
+                android:orientation="vertical"
+                android:id="@+id/dropoff_container">
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/horizontal_LL.sm.2"
+            android:gravity="center">
+            <Button
+                style="@style/normal_button"
+                android:id="@+id/get_quote"
+                android:text="@string/button_text_get_quote" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

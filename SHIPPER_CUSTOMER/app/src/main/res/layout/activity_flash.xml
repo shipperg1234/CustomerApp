@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/abc_flash_image"
+    tools:context="in.co.theshipper.www.shipper_customer.FlashActivity">
+    <LinearLayout
+     style="@style/vertical_LL">
+        <TextView
+            style="@style/horizontal_LL.sm.1"
+            android:gravity="center"
+            android:visibility="gone"
+            android:id="@+id/error_message" />
+    </LinearLayout>
+</FrameLayout>

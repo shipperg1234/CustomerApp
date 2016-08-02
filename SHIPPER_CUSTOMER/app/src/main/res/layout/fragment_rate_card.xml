@@ -1,0 +1,73 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_vertical_margin"
+    tools:context="in.co.theshipper.www.shipper_customer.RateCard">
+    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical">
+            <LinearLayout
+                style="@style/horizontal_LL.sm.1"
+                android:layout_marginBottom="@dimen/activity_vertical_margin">
+                <TextView
+                    style="@style/vertical_LL.sm.1"
+                    android:text="City :"
+                    android:id="@+id/city" />
+                <RelativeLayout
+                    style="@style/vertical_LL.sm.4"
+                    android:background="@color/LightGrey">
+                    <Spinner
+                        android:id="@+id/cityspinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/horizontal_LL.sm.1"
+                android:layout_marginBottom="@dimen/activity_vertical_margin">
+                <TextView
+                    style="@style/vertical_LL.sm.1"
+                    android:text="Truck :"
+                    android:id="@+id/truck"/>
+                <RelativeLayout
+                    style="@style/vertical_LL.sm.4"
+                    android:background="@color/LightGrey">
+                    <Spinner
+                        android:id="@+id/truckspinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+            </LinearLayout>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin">
+                <TableLayout
+                    android:id="@+id/tableLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:shrinkColumns="*"
+                    android:stretchColumns="*" >
+                </TableLayout>
+            </ScrollView>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin">
+                <TableLayout
+                    android:id="@+id/tableLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:shrinkColumns="*"
+                    android:stretchColumns="*" >
+                </TableLayout>
+            </ScrollView>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

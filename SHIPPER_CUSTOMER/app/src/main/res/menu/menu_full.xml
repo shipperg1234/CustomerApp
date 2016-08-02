@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="in.co.theshipper.www.shipper_customer.FullActivity">
+
+    <item android:id="@+id/location_switch"
+        android:title=""
+        app:showAsAction="always"
+        app:actionLayout="@layout/switch_layout"/>
+
+</menu>

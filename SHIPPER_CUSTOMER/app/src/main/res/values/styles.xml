@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <style name="MyAppTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="android:textViewStyle">@style/QText</item>
+    </style>
+
+    <!--- By Shubham
+    <style name="MyAppTheme" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+    End-->
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="android:background" >@color/dark_green</item>
+        <item name="background">@color/dark_green</item>
+        <item name="android:titleTextStyle">@style/actionbar_title</item>
+        <item name="titleTextStyle">@style/actionbar_title</item>
+        <item name="android:elevation">@dimen/elevation</item>
+        <item name="elevation">@dimen/elevation</item>
+    </style>
+    <style name="QText" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textColor">@color/glossy_black</item>
+        <item name="android:typeface">sans</item>
+    </style>
+    <style name="actionbar_title" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/pure_white</item>
+    </style>
+    <style name="vertical_LL"><item name="android:layout_width">match_parent</item><item name="android:layout_height">match_parent</item><item name="android:orientation">vertical</item></style>
+    <style name="vertical_LL.sm"><item name="android:layout_width">0dp</item></style>
+    <style name="vertical_LL.sm.1"><item name="android:layout_weight">1</item></style>
+    <style name="vertical_LL.sm.2"><item name="android:layout_weight">2</item></style>
+    <style name="vertical_LL.sm.3"><item name="android:layout_weight">3</item></style>
+    <style name="vertical_LL.sm.4"><item name="android:layout_weight">4</item></style>
+    <style name="vertical_LL.sm.5"><item name="android:layout_weight">5</item></style>
+    <style name="vertical_LL.sm.6"><item name="android:layout_weight">6</item></style>
+    <style name="vertical_LL.sm.7"><item name="android:layout_weight">7</item></style>
+    <style name="vertical_LL.sm.8"><item name="android:layout_weight">8</item></style>
+    <style name="vertical_LL.sm.9"><item name="android:layout_weight">9</item></style>
+    <style name="vertical_LL.sm.10"><item name="android:layout_weight">10</item></style>
+    <style name="vertical_LL.sm.11"><item name="android:layout_weight">8</item></style>
+    <style name="horizontal_LL"><item name="android:layout_width">match_parent</item> <item name="android:layout_height">match_parent</item><item name="android:orientation">horizontal</item></style>
+    <style name="horizontal_LL.sm"><item name="android:layout_height">0dp</item></style>
+    <style name="horizontal_LL.sm.1"><item name="android:layout_weight">1</item></style>
+    <style name="horizontal_LL.sm.2"><item name="android:layout_weight">2</item></style>
+    <style name="horizontal_LL.sm.3"><item name="android:layout_weight">3</item></style>
+    <style name="horizontal_LL.sm.4"><item name="android:layout_weight">4</item></style>
+    <style name="horizontal_LL.sm.5"><item name="android:layout_weight">5</item></style>
+    <style name="horizontal_LL.sm.6"><item name="android:layout_weight">6</item></style>
+    <style name="horizontal_LL.sm.7"><item name="android:layout_weight">7</item></style>
+    <style name="horizontal_LL.sm.8"><item name="android:layout_weight">8</item></style>
+    <style name="horizontal_LL.sm.9"><item name="android:layout_weight">9</item></style>
+    <style name="horizontal_LL.sm.10"><item name="android:layout_weight">10</item></style>
+    <style name="horizontal_LL.sm.11"><item name="android:layout_weight">11</item></style>
+    <style name="vertical_LL.sm.1.center"><item name="android:gravity">center</item></style>
+    <style name="vertical_LL.sm.2.center"><item name="android:gravity">center</item></style>
+    <style name="vertical_LL.sm.3.center"><item name="android:gravity">center</item></style>
+    <style name="vertical_LL.sm.4.center"><item name="android:gravity">center</item></style>
+    <style name="vertical_LL.sm.5.center"><item name="android:gravity">center</item></style>
+    <style name="vertical_LL.sm.6.center"><item name="android:gravity">center</item></style>
+    <style name="vertical_LL.sm.7.center"><item name="android:gravity">center</item></style>
+    <style name="vertical_LL.sm.8.center"><item name="android:gravity">center</item></style>
+    <style name="vertical_LL.sm.9.center"><item name="android:gravity">center</item></style>
+    <style name="vertical_LL.sm.10.center"><item name="android:gravity">center</item></style>
+    <style name="vertical_LL.sm.11.center"><item name="android:gravity">center</item></style>
+    <style name="horizontal_LL.sm.1.center"><item name="android:gravity">center</item></style>
+    <style name="horizontal_LL.sm.2.center"><item name="android:gravity">center</item></style>
+    <style name="horizontal_LL.sm.3.center"><item name="android:gravity">center</item></style>
+    <style name="horizontal_LL.sm.4.center"><item name="android:gravity">center</item></style>
+    <style name="horizontal_LL.sm.5.center"><item name="android:gravity">center</item></style>
+    <style name="horizontal_LL.sm.6.center"><item name="android:gravity">center</item></style>
+    <style name="horizontal_LL.sm.7.center"><item name="android:gravity">center</item></style>
+    <style name="horizontal_LL.sm.8.center"><item name="android:gravity">center</item></style>
+    <style name="horizontal_LL.sm.9.center"><item name="android:gravity">center</item></style>
+    <style name="horizontal_LL.sm.10.center"><item name="android:gravity">center</item></style>
+    <style name="horizontal_LL.sm.11.center"><item name="android:gravity">center</item></style>
+     <style name="vertical_LL.margin40dp"><item name="android:layout_margin">40dp</item></style>
+    <style name="outer_layout">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingTop">@dimen/activity_vertical_margin</item>
+        <item name="android:paddingBottom">@dimen/activity_vertical_margin</item>
+    </style>
+    <style name="normal_button">
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:textColor">@drawable/abc_button_text</item>
+        <item name="android:layout_width">wrap_content</item><item name="android:layout_height">wrap_content</item><item name="android:background">@drawable/abc_button_background</item>
+         <item name="android:gravity">center</item>
+        <item name="android:paddingTop">@dimen/normal_button_padding_top</item>
+        <item name="android:paddingBottom">@dimen/normal_button_padding_bottom</item>
+        <item name="android:paddingLeft">@dimen/normal_button_padding_left</item>
+        <item name="android:paddingRight">@dimen/normal_button_padding_right</item>
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+    <style name="full_screen_button" parent="normal_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="flat_button">
+        <item name="android:layout_weight">26</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/abc_flat_button_background</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:textColor">@drawable/abc_button_text</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+    <style name="edit_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:paddingTop">@dimen/normal_button_padding_top</item>
+        <item name="android:paddingBottom">@dimen/normal_button_padding_bottom</item>
+        <item name="android:paddingLeft">@dimen/normal_button_padding_left</item>
+        <item name="android:paddingRight">@dimen/normal_button_padding_right</item>
+        <item name="android:background">@drawable/abc_edit_text_background</item>
+    </style>
+    <style name="edit_text.phone"><item name="android:inputType">phone</item></style>
+    <style name="edit_text.name"><item name="android:inputType">textPersonName</item></style>
+    <style name="edit_text.address"><item name="android:inputType">textPostalAddress</item></style>
+    <style name="edit_text.email"><item name="android:inputType">textEmailAddress</item></style>
+    <style name="edittext_fragment">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/abc_edit_text_background</item>
+    </style>
+
+    <style name="highlighted_textview" parent="vertical_LL.sm.1.center">
+        <item name="android:background">@drawable/abc_textview_background_border</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">2dp</item>
+    </style>
+    <style name="highlighted_picker" parent="horizontal_LL.sm.4">
+        <item name="android:background">@drawable/abc_edit_text_background</item>
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="android:layout_marginBottom">1dp</item>
+    </style>
+</resources>

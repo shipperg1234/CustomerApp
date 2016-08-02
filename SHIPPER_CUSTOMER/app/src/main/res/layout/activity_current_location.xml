@@ -1,0 +1,122 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="in.co.theshipper.shipper.CurrentLocationActivity">
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8">
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                xmlns:tools="http://schemas.android.com/tools"
+                tools:context="in.co.theshipper.shipper.CurrentLocationActivity"
+                android:id="@+id/map"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            >
+                <RadioGroup
+                    android:id="@+id/radio_group_list_selector"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/radioPopular"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="Popular"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:background="@drawable/vehicle_1"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="4dp"
+                        android:textColor="@color/DimGray"/>
+                    <RadioButton
+                        android:id="@+id/radioAZ"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="AZ"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:background="@drawable/vehicle_1"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/DimGray"/>
+                    <RadioButton
+                        android:id="@+id/radioCategory"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="Category"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:background="@drawable/vehicle_1"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/IndianRed"/>
+                    <RadioButton
+                        android:id="@+id/radioNearBy"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="hello"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:background="@drawable/vehicle_1"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="4dp"
+                        android:textColor="@color/DimGray"/>
+                </RadioGroup>
+        </HorizontalScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <Button
+                android:layout_weight="20"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Book Later"
+                android:textColor="@color/White"
+                android:background="@color/Black"
+                android:id="@+id/book_future" />
+            <View
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@color/White" />
+            <Button
+                android:layout_weight="20"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Book Now"
+                android:textColor="@color/White"
+                android:background="@color/Black"
+                android:id="@+id/book_now" />
+        </LinearLayout>
+    </LinearLayout>
+    </RelativeLayout>
+
+
+

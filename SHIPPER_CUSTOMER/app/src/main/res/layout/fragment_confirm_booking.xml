@@ -1,0 +1,238 @@
+ <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        style="@style/outer_layout"
+        tools:context="in.co.theshipper.www.shipper_customer.ConfirmBooking">
+
+        <LinearLayout style="@style/vertical_LL">
+
+            <LinearLayout style="@style/horizontal_LL.sm.8">
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
+                <RelativeLayout
+                    android:background="#fff"
+                    android:paddingLeft="4sp"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    >
+
+                    <TextView
+                        android:id="@+id/pickup_point"
+                        style="@style/horizontal_LL.sm.1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:textSize="13sp"
+                        android:layout_marginTop="33dp"
+                        android:layout_below="@+id/textView"
+                        android:layout_toRightOf="@+id/imageView7"
+                        android:layout_toEndOf="@+id/imageView7" />
+
+                    <TextView
+                        android:id="@+id/dropoff_point"
+                        style="@style/horizontal_LL.sm.1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/pickup_point"
+                        android:layout_alignStart="@+id/pickup_point"
+                        android:layout_below="@+id/pickup_point"
+                        android:layout_marginTop="10sp"
+                        android:gravity="left"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/booking_datetime"
+                        style="@style/horizontal_LL.sm.1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="@dimen/medium_text_size"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignRight="@+id/vehicle_name"
+                        android:layout_alignEnd="@+id/vehicle_name" />
+
+                    <TextView
+                        android:id="@+id/vehicle_name"
+                        style="@style/horizontal_LL.sm.1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/textView7"
+                        android:layout_toEndOf="@+id/textView9"
+                        android:layout_toRightOf="@+id/textView9"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="fill_parent"
+                        android:layout_height="5sp"
+                        android:background="@color/LightGrey"
+                        android:layout_below="@+id/total_fare"
+                        android:layout_alignLeft="@+id/textView10"
+                        android:layout_alignStart="@+id/textView10"
+                        android:layout_marginTop="17dp" />
+
+                    <TextView
+                        android:id="@+id/total_distance"
+                        style="@style/horizontal_LL.sm.1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/vehicle_name"
+                        android:layout_alignStart="@+id/vehicle_name"
+                        android:layout_below="@+id/vehicle_name"
+                        android:layout_marginTop="22dp"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/total_time"
+                        style="@style/horizontal_LL.sm.1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/total_distance"
+                        android:layout_alignStart="@+id/total_distance"
+                        android:layout_below="@id/total_distance"
+                        android:layout_marginTop="22dp"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/total_fare"
+                        style="@style/horizontal_LL.sm.1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        android:layout_below="@+id/view1"
+                        android:layout_toRightOf="@+id/textView9"
+                        android:layout_toEndOf="@+id/textView9"
+                        android:layout_marginTop="17dp" />
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="20sp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/dropoff_point"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignTop="@+id/pickup_point"
+                        android:src="@drawable/loc" />
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="5sp"
+                        android:background="@color/LightGrey"
+                        android:layout_below="@+id/booking_datetime"
+                        android:layout_alignLeft="@+id/booking_datetime"
+                        android:layout_alignStart="@+id/booking_datetime"
+                        android:layout_marginTop="5dp" />
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="5sp"
+                        android:background="@color/LightGrey"
+                        android:layout_below="@+id/dropoff_point"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="20dp" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/view"
+                        android:layout_marginTop="5sp"
+                        android:text="Booking Details:"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:text="Trip Details:"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_below="@+id/view2"
+                        android:layout_alignLeft="@+id/textView10"
+                        android:layout_alignStart="@+id/textView10" />
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/textView1"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignRight="@+id/textView1"
+                        android:layout_below="@+id/textView1"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp"
+                        android:text="Vehicle:"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/textView7"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignRight="@+id/textView7"
+                        android:layout_alignTop="@+id/total_distance"
+                        android:text="Distance:"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/total_time"
+                        android:layout_alignEnd="@+id/textView"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignRight="@+id/textView"
+                        android:text="Estimated Time:"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Estimated Fare:"
+                        android:textSize="14sp"
+                        android:layout_alignTop="@+id/total_fare"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignBottom="@+id/total_fare"
+                        android:layout_toLeftOf="@+id/total_fare"
+                        android:layout_toStartOf="@+id/total_fare" />
+
+                </RelativeLayout>
+</ScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/horizontal_LL.sm.1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/confirm_booking"
+                    style="@style/normal_button"
+                    android:text="@string/button_text_confirm_booking" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>

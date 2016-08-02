@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="in.co.theshipper.www.shipper_customer.About">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp"
+        android:text="Terms&amp;Conditions"
+        android:textSize="@dimen/large_text_size"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:text="1. Shipper declares to the customer that the company does not own any vehicle. All the vehicles and drivers belong to the owners who have partnered with the Shipper. Shipper does not take the responsibilty of any of the vehicle or driver."
+        android:textSize="15sp"
+        android:layout_below="@+id/textView11"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10sp"
+
+        android:layout_marginRight="10sp"/>
+
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView12"
+        android:layout_marginLeft="10sp"
+
+        android:layout_marginRight="10sp"
+        android:text="2. Shipper may use cell no of customers for marketing purpose.Shipper may send SMS to customers on regular interval."
+        android:textSize="15sp"
+        android:layout_marginTop="15sp" />
+
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView13"
+        android:layout_marginLeft="10sp"
+
+        android:layout_marginRight="10sp"
+        android:text="3. Shipper does not take the responsibility of shipment while it is in transit. Shipper shall not be responsible for any kind of damage happened to the shipment because of any kind of road accident."
+        android:textSize="15sp"
+        android:layout_marginTop="15sp" />
+
+</RelativeLayout>
