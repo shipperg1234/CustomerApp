@@ -187,7 +187,7 @@ public class Book extends Fragment implements View.OnClickListener {
             FragmentManager fragmentManager =FullActivity.fragmentManager;
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             Fragment fragment = new BookNow();
-            transaction.replace(R.id.main_content, fragment);
+            transaction.replace(R.id.main_content, fragment, Constants.Config.CURRENT_FRAG_TAG);
             if((FullActivity.homeFragmentIndentifier == -5)){
                 transaction.addToBackStack(null);
                 FullActivity.homeFragmentIndentifier =  transaction.commit();

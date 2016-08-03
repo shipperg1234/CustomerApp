@@ -59,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 
 /**
@@ -100,9 +101,85 @@ public class BookLater extends Fragment implements View.OnClickListener, GoogleA
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (FullActivity.mGoogleApiClient.isConnected()) {
+            location = Fn.getAccurateCurrentlocation(FullActivity.mGoogleApiClient, getActivity());
+            if (location != null) {
+                southwest = new LatLng(location.getLatitude() - 2, location.getLongitude() - 2);
+                northeast = new LatLng(location.getLatitude() + 2, location.getLongitude() + 2);
+            }
+        }
+/*
+* The following code example shows setting an AutocompleteFilter on a PlaceAutocompleteFragment to
+* set a filter returning only results with a precise address.
+*/
+        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_NONE)
+                .build();
+        if (pickup_point == null) {
+            Fn.logD("BOOK_LATER_FRAGMENT", "autocompleteFragment_null");
+//            pickup_point = (PlaceAutocompleteFragment) PlaceAutocompleteFragment.instantiate(getActivity(), "com.google.android.gms.location.places.ui.PlaceAutocompleteFragment");
+//            getActivity().getFragmentManager().beginTransaction().replace(R.id.pickup_container, pickup_point).commit();
+//            pickup_point.setText("Pickup Point");
+            pickup_point = (PlaceAutocompleteFragment) getActivity().getFragmentManager().findFragmentById(R.id.pickup_point);
+            pickup_point.setHint(getResources().getString(R.string.hint_pickup_point));
+            Fn.logD("pickup_point_fragment", String.valueOf(pickup_point));
+            pickup_point.setFilter(typeFilter);
+            if ((southwest != null)) {
+                Fn.SystemPrintLn("******haha**my curn loc is : " + southwest.longitude + " " + southwest.latitude);
+                pickup_point.setBoundsBias(new LatLngBounds(southwest, northeast));
+            }
+            pickup_point.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                @Override
+                public void onPlaceSelected(Place place) {
+                    Fn.logD("BOOK_LATER_FRAGMENT", "onPlaceSelected");
+                    pickuppoint_name = (String) place.getName();
+                    pickup_address = (String) place.getAddress();
+                    pickup_latlng = place.getLatLng();
+                    pickup_lat = pickup_latlng.latitude;
+                    pickup_lng = pickup_latlng.longitude;
+                }
+
+                @Override
+                public void onError(Status status) {
+                    Fn.logD("BOOK_LATER_FRAGMENT", "onError");
+                    // TODO: Handle the error.
+                    Fn.logD("BOOK_LATER_FRAGMENT", "An error occurred: " + status);
+                }
+            });
+//            pickup_point.setHint("Pickup Point");
+        }
+        if (dropoff_point == null) {
+            Fn.logD("BOOK_LATER_FRAGMENT", "autocompleteFragment_null");
+//            dropoff_point = (PlaceAutocompleteFragment) PlaceAutocompleteFragment.instantiate(getActivity(), "com.google.android.gms.location.places.ui.PlaceAutocompleteFragment");
+//            getActivity().getFragmentManager().beginTransaction().replace(R.id.dropoff_container, dropoff_point).commit();
+            //pickup_point.setHint("Pickup Point");
+            dropoff_point = (PlaceAutocompleteFragment) getActivity().getFragmentManager().findFragmentById(R.id.dropoff_point);
+            dropoff_point.setHint(getResources().getString(R.string.hint_dropoff_point));
+            dropoff_point.setFilter(typeFilter);
+            if ((southwest != null)) {
+                dropoff_point.setBoundsBias(new LatLngBounds(southwest, northeast));
+            }
+            dropoff_point.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                @Override
+                public void onPlaceSelected(Place place) {
+                    Fn.logD("BOOK_LATER_FRAGMENT", "onPlaceSelected");
+                    dropoffpoint_name = (String) place.getName();
+                    dropoff_address = (String) place.getAddress();
+                }
+
+                @Override
+                public void onError(Status status) {
+                    Fn.logD("BOOKNOW_FRAGMENT", "onError");
+                    // TODO: Handle the error.
+                    Fn.logD("BOOK_LATER_FRAGMENT", "An error occurred: " + status);
+                }
+            });
+        }
+
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -125,78 +202,8 @@ public class BookLater extends Fragment implements View.OnClickListener, GoogleA
         });
         DatePickerDialog date_picker_dialog = new DatePickerDialog();
         date_picker_dialog.show(getActivity().getFragmentManager(), "ABC");
-        Fn.logD("BOOKNOW_FRAGMENT", "onActivityCreated");
+        Fn.logD("BOOK_LATER_FRAGMENT", "onActivityCreated");
         get_quote.setOnClickListener(this);
-        if (FullActivity.mGoogleApiClient.isConnected()) {
-            location = Fn.getAccurateCurrentlocation(FullActivity.mGoogleApiClient, getActivity());
-            if (location != null) {
-                southwest = new LatLng(location.getLatitude() - 2, location.getLongitude() - 2);
-                northeast = new LatLng(location.getLatitude() + 2, location.getLongitude() + 2);
-            }
-        }
-/*
-* The following code example shows setting an AutocompleteFilter on a PlaceAutocompleteFragment to
-* set a filter returning only results with a precise address.
-*/
-        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_NONE)
-                .build();
-        if (pickup_point == null) {
-            Fn.logD("BOOKNOW_FRAGMENT", "autocompleteFragment_null");
-            pickup_point = (PlaceAutocompleteFragment) PlaceAutocompleteFragment.instantiate(getActivity(), "com.google.android.gms.location.places.ui.PlaceAutocompleteFragment");
-            getActivity().getFragmentManager().beginTransaction().replace(R.id.pickup_container, pickup_point).commit();
-//            pickup_point.setText("Pickup Point");
-            Fn.logD("pickup_point_fragment", String.valueOf(pickup_point));
-            pickup_point.setFilter(typeFilter);
-            if ((southwest != null)) {
-                Fn.SystemPrintLn("******haha**my curn loc is : " + southwest.longitude + " " + southwest.latitude);
-                pickup_point.setBoundsBias(new LatLngBounds(southwest, northeast));
-            }
-            pickup_point.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-                @Override
-                public void onPlaceSelected(Place place) {
-                    Fn.logD("BOOKNOW_FRAGMENT", "onPlaceSelected");
-                    pickuppoint_name = (String) place.getName();
-                    pickup_address = (String) place.getAddress();
-                    pickup_latlng = place.getLatLng();
-                    pickup_lat = pickup_latlng.latitude;
-                    pickup_lng = pickup_latlng.longitude;
-                }
-
-                @Override
-                public void onError(Status status) {
-                    Fn.logD("BOOKNOW_FRAGMENT", "onError");
-                    // TODO: Handle the error.
-                    Fn.logD("BOOKNOW_FRAGMENT", "An error occurred: " + status);
-                }
-            });
-//            pickup_point.setHint("Pickup Point");
-        }
-        if (dropoff_point == null) {
-            Fn.logD("BOOKNOW_FRAGMENT", "autocompleteFragment_null");
-            dropoff_point = (PlaceAutocompleteFragment) PlaceAutocompleteFragment.instantiate(getActivity(), "com.google.android.gms.location.places.ui.PlaceAutocompleteFragment");
-            getActivity().getFragmentManager().beginTransaction().replace(R.id.dropoff_container, dropoff_point).commit();
-            //pickup_point.setHint("Pickup Point");
-            dropoff_point.setFilter(typeFilter);
-            if ((southwest != null)) {
-                dropoff_point.setBoundsBias(new LatLngBounds(southwest, northeast));
-            }
-            dropoff_point.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-                @Override
-                public void onPlaceSelected(Place place) {
-                    Fn.logD("BOOKNOW_FRAGMENT", "onPlaceSelected");
-                    dropoffpoint_name = (String) place.getName();
-                    dropoff_address = (String) place.getAddress();
-                }
-
-                @Override
-                public void onError(Status status) {
-                    Fn.logD("BOOKNOW_FRAGMENT", "onError");
-                    // TODO: Handle the error.
-                    Fn.logD("BOOKNOW_FRAGMENT", "An error occurred: " + status);
-                }
-            });
-        }
     }
 
     @Override
@@ -296,5 +303,13 @@ public class BookLater extends Fragment implements View.OnClickListener, GoogleA
 
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Fn.logD("BOOK_LATER_FRAGMENT", "onDestroyView called");
+        getActivity().getFragmentManager().beginTransaction().remove(getActivity().getFragmentManager().findFragmentById(R.id.pickup_point)).commitAllowingStateLoss();
+        getActivity().getFragmentManager().beginTransaction().remove(getActivity().getFragmentManager().findFragmentById(R.id.dropoff_point)).commitAllowingStateLoss();
 
+    }
 }

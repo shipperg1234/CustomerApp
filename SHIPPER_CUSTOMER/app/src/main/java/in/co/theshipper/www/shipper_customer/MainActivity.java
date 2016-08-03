@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity
             String mobile_no = MOBILE_NO.getText().toString();
             HashMap<String,String> hashMap = new HashMap<String, String>();
             hashMap.put("mobile_no", mobile_no);
+            hashMap.put("OTP", String.valueOf(otp));
             Fn.putPreference(this, "mobile_no", mobile_no);
             sendVolleyRequest(reg_url,Fn.checkParams(hashMap));
         }

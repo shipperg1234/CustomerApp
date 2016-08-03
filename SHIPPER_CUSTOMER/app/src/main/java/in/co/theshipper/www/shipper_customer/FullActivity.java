@@ -66,6 +66,7 @@ public class FullActivity extends AppCompatActivity implements GoogleApiClient.C
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
+            mGoogleApiClient.connect();
         }
         if((getIntent() != null)&&(getIntent().getExtras() != null)) {
             Bundle bundle = getIntent().getExtras();
@@ -81,16 +82,9 @@ public class FullActivity extends AppCompatActivity implements GoogleApiClient.C
             item = 8;
         }
         fragmentManager = getSupportFragmentManager();
-//        fragment = new Book();
-//        FragmentTransaction transaction = fragmentManager.beginTransaction();
-//        transaction.replace(R.id.main_content, fragment);
-//        transaction.addToBackStack(null);
-//        transaction.commit();
         if (null == savedInstanceState) {
             selectItem(item);
         }
-//        Intent intent = new Intent(this, NextActivity.class);
-//        startActivity(intent);
         getSupportActionBar().setLogo(R.drawable.vehicle_1);
         getSupportActionBar().setHomeButtonEnabled(true);
         try {
@@ -364,10 +358,8 @@ public class FullActivity extends AppCompatActivity implements GoogleApiClient.C
     }
     @Override
     public void onBackPressed() {
-
+        Fn.logW("FULL_ACTIVITY_LIFECYCLE", "onBackPressed called");
         fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag(Constants.Config.CURRENT_FRAG_TAG)).commit();
-       // if(fragmentManager.getBackStackEntryCount()>0)
-         //   fragmentManager.popBackStack();
         super.onBackPressed();
         if(homeFragmentIndentifier != -5) {
             getSupportActionBar().setTitle(R.string.title_book_fragment);
