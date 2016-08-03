@@ -98,8 +98,10 @@ public class MainActivity extends AppCompatActivity
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Fn.logD("onResponse", String.valueOf(response));
-                registerSuccess();
+                Fn.logD("onResponse", response);
+                String trimmed_response = response.substring(response.indexOf("{"));
+                Fn.logD("trimmed_response", trimmed_response);
+                registerSuccess(trimmed_response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -119,11 +121,13 @@ public class MainActivity extends AppCompatActivity
     private void ErrorDialog(String Title,String Message){
         Fn.showDialog(this, Title, Message);
     }
-    public void registerSuccess(){
-        Intent intent = new Intent(this, OtpVerification.class);
-        intent.putExtra("OTP",otp);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+    public void registerSuccess(String response){
+        if(!Fn.CheckJsonError(response)) {
+            Intent intent = new Intent(this, OtpVerification.class);
+            intent.putExtra("OTP", otp);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
     }
     @Override
     public void onBackPressed() {

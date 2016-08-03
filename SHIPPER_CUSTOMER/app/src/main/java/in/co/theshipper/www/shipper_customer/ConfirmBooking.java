@@ -136,7 +136,9 @@ public class ConfirmBooking extends Fragment implements View.OnClickListener{
                     DistanceRecieveSuccess(response);
                 }else if(method.equals("confirm_booking")){
                     Fn.logD("confirm_booking_called", "confirm_booking_called");
-                    confirmBookingSuccess(response);
+                    String trimmed_response = response.substring(response.indexOf("{"));
+                    Fn.logD("trimmed_response", trimmed_response);
+                    confirmBookingSuccess(trimmed_response);
                 }
             }
         }, new Response.ErrorListener() {

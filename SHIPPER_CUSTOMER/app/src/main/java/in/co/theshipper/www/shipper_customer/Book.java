@@ -363,10 +363,12 @@ public class Book extends Fragment implements View.OnClickListener {
                                 Fn.logD("received_current_lat", received_current_lat);
                                 Fn.logD("received_current_lng", received_current_lng);
                                 //received_useremail = JO.getString("email");
-                                mMap.addMarker(new MarkerOptions()
-                                        .position(new LatLng(Double.parseDouble(received_current_lat), Double.parseDouble(received_current_lng)))
-                                        .icon(BitmapDescriptorFactory.fromResource(marker_image))
-                                        .title("Hello world"));
+                                if(mMap != null) {
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(new LatLng(Double.parseDouble(received_current_lat), Double.parseDouble(received_current_lng)))
+                                            .icon(BitmapDescriptorFactory.fromResource(marker_image))
+                                            .title("Hello world"));
+                                }
                                 count++;
                             }
                         } else {

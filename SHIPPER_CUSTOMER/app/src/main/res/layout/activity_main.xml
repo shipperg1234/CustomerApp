@@ -7,6 +7,10 @@
         style="@style/vertical_LL">
         <LinearLayout
             style="@style/horizontal_LL.sm.1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/main_activity_otp_text"/>
         </LinearLayout>
         <LinearLayout
             style="@style/horizontal_LL.sm.1">
