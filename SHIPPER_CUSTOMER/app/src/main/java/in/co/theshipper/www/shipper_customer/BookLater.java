@@ -117,35 +117,10 @@ public class BookLater extends Fragment implements View.OnClickListener, GoogleA
         material_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder getImageFrom = new AlertDialog.Builder(getContext());
-                getImageFrom.setTitle("Select:");
-                final CharSequence[] opsChars = {"Camera","Gallery"};
-                //Toast.makeText(getContext(),"tapped",Toast.LENGTH_LONG).show();
-                getImageFrom.setItems(opsChars, new android.content.DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0) {
-                            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                            startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
-                        } else if (which == 1) {
-                            Intent i = new Intent(
-                                    Intent.ACTION_PICK,
-                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            startActivityForResult(i, RESULT_LOAD_IMAGE);
-                        }
-                        dialog.dismiss();
-                    }
-                });
-                getImageFrom.create();
-                getImageFrom.show();
-
-
-
-              /*  Intent i = new Intent(
+                Intent i = new Intent(
                         Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, RESULT_LOAD_IMAGE);*/
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
         });
         DatePickerDialog date_picker_dialog = new DatePickerDialog();
@@ -226,17 +201,6 @@ public class BookLater extends Fragment implements View.OnClickListener, GoogleA
 
     @Override
     public void onClick(View v) {
-//        Calendar calendar = new GregorianCalendar(datePicker.getYear(),
-//                datePicker.getMonth(),
-//                datePicker.getDayOfMonth(),
-//                timePicker.getCurrentHour(),
-//                timePicker.getCurrentMinute());
-//        long datetime = calendar.getTimeInMillis();
-//        long currentTime = Fn.getDateTimeNowMillis();
-//        currentTime=currentTime-300000;
-//        boolean dtval=false;
-//        if(datetime>=currentTime)
-//                dtval=true;
         booking_datetime = Fn.getPreference(getActivity(), Constants.Keys.LATER_BOOKING_DATETIME);
         //Fn.putPreference(getActivity(), "selected_booking_datetime", booking_datetime);
         Bundle bundle = new Bundle();
@@ -302,11 +266,6 @@ public class BookLater extends Fragment implements View.OnClickListener, GoogleA
             }
             material_image.setImageBitmap(materialimage);
         }
-        else if(requestCode==CAMERA_PIC_REQUEST&& resultCode == getActivity().RESULT_OK && null != data){
-        materialimage = (Bitmap) data.getExtras().get("data");
-
-        material_image.setImageBitmap(materialimage); //when camera is selected
-    }
 }
 
     private Bitmap getBitmapFromUri(Uri uri) throws IOException {
