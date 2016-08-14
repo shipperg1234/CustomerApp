@@ -169,7 +169,7 @@ public class CurrentBooking extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Fn.logD("Clicked at position :",String.valueOf(position));
-                View child_view = list.getChildAt(position);
+                View child_view = list.getChildAt(position-list.getFirstVisiblePosition());
                 Fn.logD("Child View  :",String.valueOf(child_view));
                 TextView crn_no = (TextView) child_view.findViewById(R.id.crn_no);
 //                String PhoneNum = number.getText().toString();

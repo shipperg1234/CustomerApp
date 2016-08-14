@@ -1,6 +1,5 @@
 package in.co.theshipper.www.shipper_customer;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,17 +15,14 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -159,7 +155,7 @@ public class FutureBooking extends Fragment  {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Fn.logD("Clicked at position :",String.valueOf(position));
-                View child_view = list.getChildAt(position);
+                View child_view = list.getChildAt(position-list.getFirstVisiblePosition());
                 Fn.logD("Child View  :",String.valueOf(child_view));
                 TextView crn_no = (TextView) child_view.findViewById(R.id.crn_no);
 //                String PhoneNum = number.getText().toString();

@@ -42,18 +42,13 @@ public class FinishedBookingDetail extends Fragment{
     protected View view;
     protected Context context;
     private TextView received_pickup_point_view,received_dropoff_point_view, received_crn_no_view, received_booking_datetime_view,received_driver_name_view, received_driver_mobile_no_view, received_truck_name_view,received_total_fare_view;
-
-    ImageView drivericon,vehicleicon,popup;
-    Dialog dialog;
-
-
-    myDialog d;
-    RatingDialog rd;
-    String booking_id,received_crn_no;
-    TextView ratingText;
-    RatingBar ratingBar;
+    private ImageView drivericon,vehicleicon,popup;
+    private Dialog dialog;
+    private String booking_id,received_crn_no;
+    private TextView ratingText;
+    private RatingBar ratingBar;
     private String crn_no="";
-    float driver_rating;
+    private float driver_rating;
 
     public FinishedBookingDetail() {
         // Required empty public constructor
@@ -159,9 +154,6 @@ public class FinishedBookingDetail extends Fragment{
                     {
                         jsonArray = jsonObject.getJSONArray("likes");
                         int count = 0;
-//                        crn_found_view = (LinearLayout) view.findViewById(R.id.crn_found);
-//                        crn_no_view = (TextView) view.findViewById(R.id.crn_no);
-//                        vehicle_type_view = (TextView) view.findViewById(R.id.vehicle_type);
                         while (count < jsonArray.length())
                         {
                             Fn.logD("likes_entered", "likes_entered");
@@ -172,7 +164,6 @@ public class FinishedBookingDetail extends Fragment{
                             String received_booking_datetime = Fn.getDateName(JO.getString("booking_datetime"));
                             String received_total_fare = JO.getString("total_fare");
                             received_crn_no = JO.getString("crn_no");
-//                            crn_no_view.setText(received_crn_no);
                             String received_truck_name = Fn.VehicleName(received_vehicletype_id, getActivity());
                             String received_driver_name = JO.getString("driver_name");
                             String received_driver_mobile_no = JO.getString("driver_mobile_no");
@@ -194,7 +185,6 @@ public class FinishedBookingDetail extends Fragment{
                             received_crn_no_view.setText(received_crn_no);
                             received_truck_name_view.setText(received_truck_name);
                             received_total_fare_view.setText(received_total_fare + " Rs");
-
                             String driver_profile_pic_url=JO.getString("driver_profile_pic_url");
                             String profile_pic_url = Constants.Config.ROOT_PATH+driver_profile_pic_url;
                             Fn.logD("profile_pic_url", profile_pic_url);

@@ -290,6 +290,13 @@ public class Book extends Fragment implements View.OnClickListener {
                         hashMap.put("current_lng", String.valueOf(longitude));
                         sendVolleyRequest(get_vehicle_url, Fn.checkParams(hashMap));
                     }
+            }else{
+                error_message.setText(Constants.Message.SERVER_ERROR);
+                error_message.setVisibility(View.VISIBLE);
+                lower_view.setVisibility(View.GONE);
+                if(mMap != null){
+                    mMap.clear();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

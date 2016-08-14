@@ -282,12 +282,6 @@ public class ConfirmBooking extends Fragment implements View.OnClickListener{
                 String errMsg = jsonObject.getString("errMsg");
                 Fn.logD("errFlag",errFlag);
                 Fn.logD("errMsg",errMsg);
-                if(errFlag.equals("1")){
-//                 Fn.Toast(this,errMsg);
-                    Fn.logD("toastNotdone","toastNotdone");
-                }
-                else if(errFlag.equals("0"))
-                {
                     if(jsonObject.has("likes")) {
                         JSONArray  jsonArray = jsonObject.getJSONArray("likes");
 //                     Fn.Toast(this,errMsg);
@@ -322,7 +316,6 @@ public class ConfirmBooking extends Fragment implements View.OnClickListener{
                     {
                         Fn.Toast(getActivity(),Constants.Message.NEW_USER_ENTER_DETAILS);
                     }
-                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -2,16 +2,10 @@ package in.co.theshipper.www.shipper_customer;
 
 public final class Constants {
     public static final class Config{
-    //    protected static final String ROOT_PATH = "http://theshipper.ml/";
-        protected static final String ROOT_PATH = "http://theshipper.ml/loader_mobile/";
-//        protected static final String ROOT_PATH = "http://www.theshipper.co.in/loader_mobile/";
+//        protected static final String ROOT_PATH = "http://theshipper.ml/";
+//        protected static final String ROOT_PATH = "http://theshipper.ml/loader_mobile/";
+        protected static final String ROOT_PATH = "http://www.theshipper.co.in/loader_mobile/";
 //        public static final String ROOT_PATH = "http://52.77.190.248/";
-//        public static final String ROOT_PATH = "http://192.168.0.100/loader_mobile/";
-//        public static final String ROOT_PATH = "http://192.168.0.101/loader_mobile/";
-//        public static final String ROOT_PATH = "http://192.168.0.102/loader_mobile/";
-//        public static final String ROOT_PATH = "http://192.168.0.103/loader_mobile/";
-//        public static final String ROOT_PATH = "http://192.168.0.104/loader_mobile/";
-//        public static final String ROOT_PATH = "http://192.168.1.5/loader_mobile/";
         protected static final int UPDATE_CUSTOMER_LOCATION_DELAY = 0*10000;
         protected static final int UPDATE_CUSTOMER_LOCATION_PERIOD = 30*1000;
         protected static final int GET_DRIVER_LOCATION_DELAY = 0*10000;
@@ -24,7 +18,8 @@ public final class Constants {
         protected static final int NAME_FIELD_LENGTH = 50;
         protected static final int ADDRESS_FIELD_LENGTH = 50;
         protected static final int DELAY_AFTER_TOAST = 10;
-        protected static final int DELAY_LOCATION_CHECK = 1*1000;
+        protected static final int DELAY_LOCATION_CHECK = 0*100;
+        protected static final int PERIOD_LOCATION_CHECK  = 2*100;
         protected static final float MAP_HIGH_ZOOM_LEVEL = 17;
         protected static final float MAP_MID_ZOOM_LEVEL = 15;
         protected static final float MAP_SMALL_ZOOM_LEVEL = 13;

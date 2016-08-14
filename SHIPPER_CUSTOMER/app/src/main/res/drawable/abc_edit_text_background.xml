@@ -6,6 +6,7 @@
         <corners android:radius="@dimen/corner_radius"/>
         <stroke android:width="@dimen/stroke_width" android:color="@color/border_focus_blue" />
     </shape>
+        <color android:color="@color/pure_white"></color>
     </item>
     <!--focussed state-->
     <item android:state_enabled="true" android:state_focused="false">
@@ -13,6 +14,7 @@
         <corners android:radius="@dimen/corner_radius"/>
         <stroke android:width="@dimen/stroke_width" android:color="@color/dark_green" />
     </shape>
+        <color android:color="@color/pure_white"></color>
     </item>
 </selector>
 

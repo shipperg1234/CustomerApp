@@ -385,7 +385,7 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
                     if (location != null) {
                         double current_lat = location.getLatitude();
                         double current_lng = location.getLongitude();
-                        LatLng latlng = new LatLng(current_lat, current_lng);// This methods gets the users current longitude and latitude.
+                        LatLng latlng = new LatLng(Double.parseDouble(received_driver_current_lat), Double.parseDouble(received_driver_current_lng));// This methods gets the users current longitude and latitude.
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));//Moves the camera to users current longitude and latitude
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, Constants.Config.MAP_HIGH_ZOOM_LEVEL));//Animates camera and zooms to preferred state on the user's current location.
                         Fn.logD("received_driver_current_lat", received_driver_current_lat);

@@ -108,21 +108,19 @@
     </string-array>
     <string-array name="zip_weight_list">
         <item>.5 Tonne</item>
-        <item>1 Tonne</item>
+        <item>&lt;1 Tonne</item>
     </string-array>
     <string-array name="ace_weight_list">
         <item>.5 Tonne</item>
         <item>1 Tonne</item>
-        <item>1.5 Tonne</item>
-        <item>2 Tonne</item>
+        <item>&lt;1.5 Tonne</item>
     </string-array>
     <string-array name="pickup_weight_list">
         <item>.5 Tonne</item>
         <item>1 Tonne</item>
         <item>1.5 Tonne</item>
         <item>2 Tonne</item>
-        <item>2.5 Tonne</item>
-        <item>3 Tonne</item>
+        <item>&lt;2.5 Tonne</item>
     </string-array>
     <string-array name="tata_weight_list">
         <item>.5 Tonne</item>
@@ -132,7 +130,7 @@
         <item>2.5 Tonne</item>
         <item>3 Tonne</item>
         <item>3.5 Tonne</item>
-        <item>4 Tonne</item>
+        <item>&lt;4 Tonne</item>
     </string-array>
     <!--SLIDE TAB MENU-->
     <string-array name="slide_tab_manu">

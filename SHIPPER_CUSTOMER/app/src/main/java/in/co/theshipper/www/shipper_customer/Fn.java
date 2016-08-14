@@ -101,19 +101,19 @@ import java.util.TimeZone;
  */
 public class Fn {
     protected static void logD(String key, String value) {
-        Log.d(key, value);
+//        Log.d(key, value);
     }
 
     protected static void logE(String key, String value) {
-        Log.e(key, value);
+//        Log.e(key, value);
     }
 
     protected static void logV(String key, String value) {
-        Log.v(key, value);
+//        Log.v(key, value);
     }
 
     protected static void logW(String key, String value) {
-        Log.w(key, value);
+//        Log.w(key, value);
     }
     protected static void SystemPrintLn(Object message){
         System.out.println(message);

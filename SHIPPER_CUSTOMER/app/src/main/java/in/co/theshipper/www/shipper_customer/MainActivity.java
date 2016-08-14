@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        System.out.println(" ### Back pressed!!!");
+        Fn.SystemPrintLn(" ### Back pressed!!!");
     }
     @Override
     protected void onResume()

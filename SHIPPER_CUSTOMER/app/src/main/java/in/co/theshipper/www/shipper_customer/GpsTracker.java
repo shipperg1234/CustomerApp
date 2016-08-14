@@ -159,9 +159,6 @@ public class GpsTracker extends Service implements GoogleApiClient.ConnectionCal
             Fn.logD("latitude", lattitude);
             Fn.logD("longitude",longitude);
             sendVolleyRequest(update_location_url,Fn.checkParams(hashMap));
-//            String method = "update_customer_location";
-//            BackgroundTask backgroundTask = new BackgroundTask(this);
-//            backgroundTask.execute(method, String.valueOf(latitude), String.valueOf(longitude));
         }
     }
     public void sendVolleyRequest(String URL, final HashMap<String,String> hMap){

@@ -68,18 +68,19 @@ public class FlashActivity extends AppCompatActivity implements  GoogleApiClient
     protected RequestQueue requestQueue;
     protected  DBController controller;
     protected SQLiteDatabase database;
-    protected  HashMap<String, String> queryValues;
-    TextView error_message;
+    private  HashMap<String, String> queryValues;
+    private TextView error_message;
 //    ProgressBar progressBar;
-    Boolean stopTimer;
-    Timer timer;
+    private int googleCount = 0;
+    private Boolean stopTimer = false,stopForEver = false;
+    private Timer timer;
     private Location location;
-    ProgressDialog progressDialog;
-    Boolean isNetworkEnabled = false;
-    Boolean isGpsEnabled = false;
+    private  ProgressDialog progressDialog;
+    private Boolean isNetworkEnabled = false;
+    private Boolean isGpsEnabled = false;
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-    GoogleApiClient mGoogleApiClient;
+    private GoogleApiClient mGoogleApiClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +97,7 @@ public class FlashActivity extends AppCompatActivity implements  GoogleApiClient
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
-//            mGoogleApiClient.connect();
+            mGoogleApiClient.connect();
         }
     }
     @Override
@@ -119,10 +120,10 @@ public class FlashActivity extends AppCompatActivity implements  GoogleApiClient
     @Override
     protected void onResume() {
         Fn.logE("FLASH_ACTIVITY_LIFECYCLE", "onResume");
+        super.onResume();
+        Fn.startAllVolley(requestQueue);
         stopTimer = false;
         mGoogleApiClient.connect();
-        super.onResume();
-
         Fn.logE("google_connected", "true");
         if (checkPlayServices())
         {
@@ -144,13 +145,12 @@ public class FlashActivity extends AppCompatActivity implements  GoogleApiClient
                             }
                         }
                     } else {
+                        googleCount++;
                         if (timer == null) {
                             TimerProgramm();
                         }
                     }
                 } else {
-//                    error_message.setText(Constants.Message.NETWORK_ERROR);
-//                    error_message.setVisibility(View.VISIBLE);
                     ErrorDialog(Constants.Title.NETWORK_ERROR, Constants.Message.NETWORK_ERROR);
                     if (timer == null) {
                         TimerProgramm();
@@ -164,15 +164,15 @@ public class FlashActivity extends AppCompatActivity implements  GoogleApiClient
     public void TimerProgramm() {
         Fn.showProgressDialogLong(Constants.Message.CONNECTING, this);
         Fn.logD("TimerProgram", "TimerProgram");
-        int delay = Constants.Config.DELAY_LOCATION_CHECK; // delay for 20 sec.
-        int period = Constants.Config.DELAY_LOCATION_CHECK; // repeat every 20 sec.
+        int delay = Constants.Config.DELAY_LOCATION_CHECK; // delay for 0 sec.
+        int period = Constants.Config.PERIOD_LOCATION_CHECK; // repeat every 100 msec.
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         Fn.logD("TimerProgram_running", "TimerProgram_running");
-                        if (stopTimer != true) {
+                        if ((stopTimer != true)&&(stopForEver != true)) {
                             checkLocation();
                         }
                     }
@@ -187,22 +187,24 @@ public class FlashActivity extends AppCompatActivity implements  GoogleApiClient
                 Fn.logE("isNetworkEnabled", "true");
                   location = Fn.getAccurateCurrentlocation(mGoogleApiClient, this);
                 if (location != null) {
-                    stopTimer = true;
+                    stopForEver = true;
                    getCity(location);
                 }
             }
         } else {
-//            error_message.setText(Constants.Message.NETWORK_ERROR);
-//            error_message.setVisibility(View.VISIBLE);
+            googleCount++;
+            if(googleCount == 3) {
+                stopForEver = true;
+                ErrorDialog(Constants.Title.NETWORK_ERROR, Constants.Message.NETWORK_ERROR);
+            }
         }
     }
     @Override
     public void onPause() {
         super.onPause();
         Fn.logE("FLASH_ACTIVITY_LIFECYCLE", "onPause Called");
-//        Fn.stopAllVolley(requestQueue);
+        Fn.stopAllVolley(requestQueue);
         if(mGoogleApiClient.isConnected()){
-//            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
         }
         stopTimer = true;
@@ -211,7 +213,7 @@ public class FlashActivity extends AppCompatActivity implements  GoogleApiClient
     protected void onDestroy() {
         Fn.logE("FLASH_ACTIVITY_LIFECYCLE","onDestroy Called");
         super.onDestroy();
-//        database.close();
+        Fn.cancelAllRequest(requestQueue,TAG);
         if(timer != null){
             timer.cancel();
             timer = null;
@@ -247,7 +249,6 @@ public class FlashActivity extends AppCompatActivity implements  GoogleApiClient
         // private ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
         InputStream is = null;
         String result = "";
-
         protected void onPreExecute() {
         }
 
@@ -437,7 +438,7 @@ public class FlashActivity extends AppCompatActivity implements  GoogleApiClient
         HashMap<String,String> hashMap = new HashMap<>();
         hashMap.put("current_lat",String.valueOf(current_lat));
         hashMap.put("current_lng",String.valueOf(current_lng));
-        sendVolleyRequest(get_city_url,hashMap);
+        sendVolleyRequest(get_city_url,Fn.checkParams(hashMap));
     }
     public void sendVolleyRequest(String URL, final HashMap<String,String> hMap){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
@@ -473,7 +474,8 @@ public class FlashActivity extends AppCompatActivity implements  GoogleApiClient
             Fn.logD("errMsg",errMsg);
             if(errFlag.equals("1")){
                 Fn.Toast(this,errMsg);
-                Fn.logD("toastNotdone","toastNotdone");
+                Fn.logD("toastNotdone", "toastNotdone");
+                ErrorDialog(Constants.Title.SERVER_ERROR, Constants.Message.SERVER_ERROR);
             }
             else if(errFlag.equals("0"))
             {
