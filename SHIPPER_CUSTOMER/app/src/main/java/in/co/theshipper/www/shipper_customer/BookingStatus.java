@@ -40,40 +40,44 @@ public class BookingStatus extends Fragment implements ActionBar.TabListener{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        view_pager = (ViewPager) view.findViewById(R.id.view_pager);
-        view_pager.setAdapter(new MyAdapter(FullActivity.fragmentManager));
-        view_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        if(getActivity() != null) {
+            view_pager = (ViewPager) view.findViewById(R.id.view_pager);
+            view_pager.setAdapter(new MyAdapter(FullActivity.fragmentManager));
+            view_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 //                Fn.logD("onPageScrolled","scrolled at position:"+position+"from: "+positionOffset+"with no of pixel"+positionOffsetPixels);
-            }
-            @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
-//                Fn.logD("onPageSelected"," at position:"+position);
-            }
-            @Override
-            public void onPageScrollStateChanged(int state) {
-//                Fn.logD("onPageScrollStateChanged","state:"+state);
-            }
-        });
+                }
 
-        actionBar =((AppCompatActivity)getActivity()).getSupportActionBar();
-        actionBar.removeAllTabs();
-        if(actionBar.getTabCount()==0) {
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            ActionBar.Tab tab1 = actionBar.newTab();
-            tab1.setText(R.string.title_current_booking_fragment);
-            ActionBar.Tab tab2 = actionBar.newTab();
-            tab2.setText(R.string.title_future_booking_fragment);
-            ActionBar.Tab tab3 = actionBar.newTab();
-            tab3.setText(R.string.title_finished_booking_fragment);
-            tab1.setTabListener(this);
-            tab2.setTabListener(this);
-            tab3.setTabListener(this);
-            actionBar.addTab(tab1);
-            actionBar.addTab(tab2);
-            actionBar.addTab(tab3);
+                @Override
+                public void onPageSelected(int position) {
+                    actionBar.setSelectedNavigationItem(position);
+//                Fn.logD("onPageSelected"," at position:"+position);
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+//                Fn.logD("onPageScrollStateChanged","state:"+state);
+                }
+            });
+
+            actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            actionBar.removeAllTabs();
+            if (actionBar.getTabCount() == 0) {
+                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                ActionBar.Tab tab1 = actionBar.newTab();
+                tab1.setText(R.string.title_current_booking_fragment);
+                ActionBar.Tab tab2 = actionBar.newTab();
+                tab2.setText(R.string.title_future_booking_fragment);
+                ActionBar.Tab tab3 = actionBar.newTab();
+                tab3.setText(R.string.title_finished_booking_fragment);
+                tab1.setTabListener(this);
+                tab2.setTabListener(this);
+                tab3.setTabListener(this);
+                actionBar.addTab(tab1);
+                actionBar.addTab(tab2);
+                actionBar.addTab(tab3);
+            }
         }
     }
 

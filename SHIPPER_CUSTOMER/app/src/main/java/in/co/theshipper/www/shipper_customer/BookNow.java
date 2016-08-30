@@ -97,6 +97,7 @@ public class BookNow extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(getActivity() != null) {
         if (FullActivity.mGoogleApiClient.isConnected()) {
             location = Fn.getAccurateCurrentlocation(FullActivity.mGoogleApiClient, getActivity());
             if (location != null) {
@@ -162,30 +163,32 @@ public class BookNow extends Fragment implements View.OnClickListener {
                 }
             });
         }
-
+    }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        String selected_vehicle_type =  Fn.getPreference(getActivity(), "selected_vehicle");
-        String[] weight_string_array = Fn.getWeightList(getActivity(),selected_vehicle_type);
-        ArrayList<String> weight_list = new ArrayList(Arrays.asList(weight_string_array));
-        ArrayAdapter<String> weight_adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, weight_list);
-        weight_spinner.setAdapter(weight_adapter);
-        material_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
-            }
-        });
+        if(getActivity() != null) {
+            String selected_vehicle_type = Fn.getPreference(getActivity(), "selected_vehicle");
+            String[] weight_string_array = Fn.getWeightList(getActivity(), selected_vehicle_type);
+            ArrayList<String> weight_list = new ArrayList(Arrays.asList(weight_string_array));
+            ArrayAdapter<String> weight_adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, weight_list);
+            weight_spinner.setAdapter(weight_adapter);
+            material_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(
+                            Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(i, RESULT_LOAD_IMAGE);
+                }
+            });
 
-        Fn.logD("BOOKNOW_FRAGMENT", "onActivityCreated");
-        get_quote.setOnClickListener(this);
+            Fn.logD("BOOKNOW_FRAGMENT", "onActivityCreated");
+            get_quote.setOnClickListener(this);
+        }
     }
     @Override
     public void onClick (View v){
@@ -193,7 +196,9 @@ public class BookNow extends Fragment implements View.OnClickListener {
         Bundle bundle = new Bundle();
         String imgstring="";
         if(materialimage==null)
-            Fn.ToastShort(getActivity(),Constants.Message.EMPTY_IMAGE);
+            if(getActivity() != null) {
+                Fn.ToastShort(getActivity(), Constants.Message.EMPTY_IMAGE);
+            }
         else {
                 imgstring = Fn.getStringImage(materialimage);
             if (isValid(pickup_address, dropoff_address)) {
@@ -213,10 +218,13 @@ public class BookNow extends Fragment implements View.OnClickListener {
                     transaction.commit();
                     Fn.logD("fragment instanceof Book", "homeidentifier != -1");
                 }
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_confirm_booking_fragment);
+                if(getActivity() != null) {
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_confirm_booking_fragment);
+                }
             } else {
-
-                Fn.ToastShort(getActivity(), Constants.Message.INVALID_ADDRESS);
+                if(getActivity() != null) {
+                    Fn.ToastShort(getActivity(), Constants.Message.INVALID_ADDRESS);
+                }
             }
         }
     }
@@ -235,27 +243,30 @@ public class BookNow extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == getActivity().RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
+        if(getActivity() != null) {
+            if (requestCode == RESULT_LOAD_IMAGE && resultCode == getActivity().RESULT_OK && null != data) {
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String picturePath = cursor.getString(columnIndex);
+                cursor.close();
 //            Bitmap bmp = null;
-            try {
-                Uri reduceSizePath = Fn.getImageContentUri(getActivity(), Fn.decodeFile(picturePath, Constants.Config.IMAGE_WIDTH, Constants.Config.IMAGE_HEIGHT));
-                materialimage = getBitmapFromUri(reduceSizePath);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                try {
+                    Uri reduceSizePath = Fn.getImageContentUri(getActivity(), Fn.decodeFile(picturePath, Constants.Config.IMAGE_WIDTH, Constants.Config.IMAGE_HEIGHT));
+                    materialimage = getBitmapFromUri(reduceSizePath);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                material_image.setImageBitmap(materialimage);
             }
-            material_image.setImageBitmap(materialimage);
         }
     }
 
     private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+        //TODO intitialise bitmap
         ParcelFileDescriptor parcelFileDescriptor = getActivity().getContentResolver().openFileDescriptor(uri, "r");
         FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
         Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);

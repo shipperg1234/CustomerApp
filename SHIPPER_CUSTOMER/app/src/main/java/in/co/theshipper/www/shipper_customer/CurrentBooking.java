@@ -88,41 +88,45 @@ public class CurrentBooking extends Fragment {
 
     private void createRequest(final int page_no){
 
-        final String user_token = Fn.getPreference(getActivity(),"user_token");
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.Config.ROOT_PATH+"current_booking_list",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
-                        Fn.logD("Response for FUTURE_BOOKING_FRAGMENT recieved",response);
-                        uiUpdate(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-                        Fn.logD("error", ": volley request failed");
+        if(getActivity() != null) {
+            final String user_token = Fn.getPreference(getActivity(), "user_token");
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.Config.ROOT_PATH + "current_booking_list",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            //Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
+                            Fn.logD("Response for FUTURE_BOOKING_FRAGMENT recieved", response);
+                            uiUpdate(response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            //Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                            Fn.logD("error", ": volley request failed");
 //                        ErrorDialog(Constants.Title.NETWORK_ERROR,Constants.Message.NETWORK_ERROR);
-                        Fn.ToastShort(getActivity(),Constants.Message.NETWORK_ERROR);
-                    }
-                }){
-            @Override
-            protected HashMap<String,String> getParams(){
-                HashMap<String,String> params = new HashMap<String, String>();
-                params.put("user_token",user_token);
-                params.put("page_no",String.valueOf(page_no));
+                            Fn.ToastShort(getActivity(), Constants.Message.NETWORK_ERROR);
+                        }
+                    }) {
+                @Override
+                protected HashMap<String, String> getParams() {
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("user_token", user_token);
+                    params.put("page_no", String.valueOf(page_no));
 //                Fn.logD("user_token",user_token);
-                return Fn.checkParams(params);
-            }
+                    return Fn.checkParams(params);
+                }
 
-        };
-        requestQueue = Volley.newRequestQueue(getContext());
-        stringRequest.setTag(TAG);
-        requestQueue.add(stringRequest);
+            };
+            requestQueue = Volley.newRequestQueue(getContext());
+            stringRequest.setTag(TAG);
+            requestQueue.add(stringRequest);
+        }
     }
     private void ErrorDialog(String Title,String Message){
-        Fn.showDialog(getActivity(), Title, Message);
+        if(getActivity() != null) {
+            Fn.showDialog(getActivity(), Title, Message);
+        }
     }
     private void uiUpdate(String response)
     {
@@ -146,7 +150,9 @@ public class CurrentBooking extends Fragment {
                         Fn.logD("crn_no and datetime1 recieved ", UpdationObject.get("crn_no").toString() + UpdationObject.get("datetime1").toString());
                         qvalues.put("crn_no", UpdationObject.get("crn_no").toString());
                         qvalues.put("datetime1", Fn.getDateName(UpdationObject.get("datetime1").toString()));
-                        qvalues.put("vehicle_type", Fn.VehicleName(UpdationObject.get("vehicletype_id").toString(), getActivity()));
+                        if(getActivity() != null) {
+                            qvalues.put("vehicle_type", Fn.VehicleName(UpdationObject.get("vehicletype_id").toString(), getActivity()));
+                        }
                         qvalues.put("pickup_point", UpdationObject.get("pickup_point").toString());
                         qvalues.put("dropoff_point", UpdationObject.get("dropoff_point").toString());
                         qvalues.put("vehicle_image", Integer.toString(Fn.getVehicleImage(Integer.parseInt(UpdationObject.get("vehicletype_id").toString()))));
@@ -156,7 +162,9 @@ public class CurrentBooking extends Fragment {
                 }
             }else{
 //                ErrorDialog(Constants.Title.SERVER_ERROR,Constants.Message.SERVER_ERROR);
-                Fn.ToastShort(getActivity(),Constants.Message.SERVER_ERROR);
+                if(getActivity() != null) {
+                    Fn.ToastShort(getActivity(), Constants.Message.SERVER_ERROR);
+                }
             }
         }
         catch(Exception e)
@@ -190,7 +198,9 @@ public class CurrentBooking extends Fragment {
                     transaction.commit();
                     Fn.logD("fragment instanceof Book","homeidentifier != -1");
                 }
-                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.title_current_booking_deatil_fragment);
+                if(getActivity() != null) {
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_current_booking_deatil_fragment);
+                }
 
             }
         });

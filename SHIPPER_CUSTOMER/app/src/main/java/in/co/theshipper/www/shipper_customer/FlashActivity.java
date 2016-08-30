@@ -84,7 +84,7 @@ public class FlashActivity extends AppCompatActivity implements  GoogleApiClient
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       getSupportActionBar().hide();
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_flash);
         Fn.logE("FLASH_ACTIVITY_LIFECYCLE", "onCreate");
         getSupportActionBar().hide();
@@ -509,16 +509,5 @@ public class FlashActivity extends AppCompatActivity implements  GoogleApiClient
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-    public void DummyCityGet(){
-        Fn.putPreference(this,Constants.Keys.CITY_ID,"1");
-        new fetch().execute();
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                NextActivity();
-            }
-        }, Constants.Config.FLASH_TO_MAIN_DELAY);
     }
 }

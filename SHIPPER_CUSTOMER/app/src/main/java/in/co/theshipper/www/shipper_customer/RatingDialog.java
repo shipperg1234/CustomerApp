@@ -71,13 +71,18 @@ public class RatingDialog extends DialogFragment implements View.OnClickListener
     public void onClick(View v) {
         rating = ratingBar.getRating();
         feedback = feedbackText.getText().toString();
-        if (rating == 0.0f)
-            Toast.makeText(getActivity(), "Give a rating!!", Toast.LENGTH_SHORT).show();
+        if (rating == 0.0f) {
+            if(getActivity() !=  null) {
+                Toast.makeText(getActivity(), "Give a rating!!", Toast.LENGTH_SHORT).show();
+            }
+        }
         else {
             HashMap<String, String> hashMap = new HashMap<String, String>();
             String rating_url = Constants.Config.ROOT_PATH + "rate_driver";
             // String CrnNo = Fn.getPreference(getActivity(),"current_crn_no");
-            String user_token = Fn.getPreference(getActivity(), "user_token");
+            if(getActivity() !=  null) {
+                String user_token = Fn.getPreference(getActivity(), "user_token");
+            }
             hashMap.put("booking_id", booking_id);
             hashMap.put("driver_rating", String.valueOf(rating));
             hashMap.put("customer_feedback", feedback);
@@ -86,63 +91,66 @@ public class RatingDialog extends DialogFragment implements View.OnClickListener
     }
 
     public void sendVolleyRequest(String URL, final HashMap<String, String> hMap) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Fn.logD("onResponse_booking_status", String.valueOf(response));
-                handleResponse(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Fn.logD("onErrorResponse", String.valueOf(error));
-            }
-        }) {
-            @Override
-            protected HashMap<String, String> getParams() {
-                return hMap;
-            }
-        };
-        stringRequest.setTag(TAG);
-        Fn.addToRequestQue(requestQueue, stringRequest, getActivity());
+        if(getActivity() !=  null) {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Fn.logD("onResponse_booking_status", String.valueOf(response));
+                    handleResponse(response);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Fn.logD("onErrorResponse", String.valueOf(error));
+                }
+            }) {
+                @Override
+                protected HashMap<String, String> getParams() {
+                    return hMap;
+                }
+            };
+            stringRequest.setTag(TAG);
+            Fn.addToRequestQue(requestQueue, stringRequest, getActivity());
+        }
     }
 
     protected void handleResponse(String response) {
-        Fn.logD("COMPLETED_RATING_FRAGMENT_LIFECYCLE", "rate_Driver Called");
-        if (!Fn.CheckJsonError(response)) {
+        if(getActivity() !=  null) {
+            Fn.logD("COMPLETED_RATING_FRAGMENT_LIFECYCLE", "rate_Driver Called");
+            if (!Fn.CheckJsonError(response)) {
 //            Fn.logD("bookingStatusSuccess", "bookingStatusSuccess Called");
-            Fn.logD("received_json", response);
-            JSONObject jsonObject;
-            try {
-                jsonObject = new JSONObject(response);
-                String errFlag = jsonObject.getString("errFlag");
-                String errMsg = jsonObject.getString("errMsg");
-                if (errFlag.equals("1")) {
-                    Fn.ToastShort(getActivity(),"Error in submission");
-                }
-                else{
-                    Fn.ToastShort(getActivity(), "Feedback submitted");
-                    Fragment fragment = new FinishedBookingDetail();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("crn_no", crn_no);
-                    Fn.logD("passed_crn_no",crn_no);
-                    fragment.setArguments(Fn.CheckBundle(bundle));
-                    FragmentManager fragmentManager = FullActivity.fragmentManager;
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                Fragment fragment = new BookNow();
-                    transaction.replace(R.id.main_content, fragment, Constants.Config.CURRENT_FRAG_TAG);
-                    if ((FullActivity.homeFragmentIndentifier == -5)) {
-                        transaction.addToBackStack(null);
-                        FullActivity.homeFragmentIndentifier = transaction.commit();
+                Fn.logD("received_json", response);
+                JSONObject jsonObject;
+                try {
+                    jsonObject = new JSONObject(response);
+                    String errFlag = jsonObject.getString("errFlag");
+                    String errMsg = jsonObject.getString("errMsg");
+                    if (errFlag.equals("1")) {
+                        Fn.ToastShort(getActivity(), "Error in submission");
                     } else {
-                        transaction.commit();
-                        Fn.logD("fragment instanceof Book", "homeidentifier != -1");
-                    }
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_finished_booking_detail_fragment);
+                        Fn.ToastShort(getActivity(), "Feedback submitted");
+                        Fragment fragment = new FinishedBookingDetail();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("crn_no", crn_no);
+                        Fn.logD("passed_crn_no", crn_no);
+                        fragment.setArguments(Fn.CheckBundle(bundle));
+                        FragmentManager fragmentManager = FullActivity.fragmentManager;
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+//                Fragment fragment = new BookNow();
+                        transaction.replace(R.id.main_content, fragment, Constants.Config.CURRENT_FRAG_TAG);
+                        if ((FullActivity.homeFragmentIndentifier == -5)) {
+                            transaction.addToBackStack(null);
+                            FullActivity.homeFragmentIndentifier = transaction.commit();
+                        } else {
+                            transaction.commit();
+                            Fn.logD("fragment instanceof Book", "homeidentifier != -1");
+                        }
+                        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_finished_booking_detail_fragment);
 
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
         }
     }

@@ -53,66 +53,70 @@ public class CustomerEdit extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        String mobile_no = "";
-        String get_user_info_url = Constants.Config.ROOT_PATH + "get_customer_info";
-        Fn.logD("get_user_info_url", get_user_info_url);
-        mobile_no = Fn.getPreference(getActivity(), "mobile_no");
-        Fn.logD("mobile_no", mobile_no);
-        HashMap<String, String> hashMap = new HashMap<String, String>();
-        hashMap.put("mobile_no", mobile_no);
-        sendVolleyRequest(get_user_info_url, Fn.checkParams(hashMap), "get_info");
-        updateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (checkValidation()) {
+        if(getActivity() != null) {
+            String mobile_no = "";
+            String get_user_info_url = Constants.Config.ROOT_PATH + "get_customer_info";
+            Fn.logD("get_user_info_url", get_user_info_url);
+            mobile_no = Fn.getPreference(getActivity(), "mobile_no");
+            Fn.logD("mobile_no", mobile_no);
+            HashMap<String, String> hashMap = new HashMap<String, String>();
+            hashMap.put("mobile_no", mobile_no);
+            sendVolleyRequest(get_user_info_url, Fn.checkParams(hashMap), "get_info");
+            updateButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (checkValidation()) {
 //                    Fn.showProgressDialog(Constants.Message.LOADING,getActivity());
-                    String username = name.getText().toString();
-                    String useremail = email.getText().toString();
-                    String useraddress = address.getText().toString();
-                    String edit_customer_profile_url = Constants.Config.ROOT_PATH + "edit_customer_profile";
-                    Fn.logD("useraddress", useraddress);
-                    Fn.logD("useremail", useremail);
-                    Fn.logD("username", username);
-                    HashMap<String, String> hashMap = new HashMap<String, String>();
-                    hashMap.put("name", username);
-                    hashMap.put("email", useremail);
-                    hashMap.put("postal_address", useraddress);
-                    hashMap.put("user_token",Fn.getPreference(getActivity(),"user_token"));
-                    sendVolleyRequest(edit_customer_profile_url, Fn.checkParams(hashMap), "edit_info");
-                } else {
-                    Fn.ToastShort(getActivity(),Constants.Message.FORM_ERROR);
+                        String username = name.getText().toString();
+                        String useremail = email.getText().toString();
+                        String useraddress = address.getText().toString();
+                        String edit_customer_profile_url = Constants.Config.ROOT_PATH + "edit_customer_profile";
+                        Fn.logD("useraddress", useraddress);
+                        Fn.logD("useremail", useremail);
+                        Fn.logD("username", username);
+                        HashMap<String, String> hashMap = new HashMap<String, String>();
+                        hashMap.put("name", username);
+                        hashMap.put("email", useremail);
+                        hashMap.put("postal_address", useraddress);
+                        hashMap.put("user_token", Fn.getPreference(getActivity(), "user_token"));
+                        sendVolleyRequest(edit_customer_profile_url, Fn.checkParams(hashMap), "edit_info");
+                    } else {
+                        Fn.ToastShort(getActivity(), Constants.Message.FORM_ERROR);
 //                    Toast.makeText(getActivity(), "Form Contains Error", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
     public void sendVolleyRequest(String URL, final HashMap<String,String> hMap,final String method){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Fn.logD("onResponse", String.valueOf(response));
+        if(getActivity() != null) {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Fn.logD("onResponse", String.valueOf(response));
 //                json_string=response;
-                if(method.equals("get_info")) {
-                    setValues(response);
-                }else if(method.equals("edit_info")){
-                    editProfileSuccess(response);
+                    if (method.equals("get_info")) {
+                        setValues(response);
+                    } else if (method.equals("edit_info")) {
+                        editProfileSuccess(response);
+                    }
+                    //OtpVerificationSuccess(response);
                 }
-                //OtpVerificationSuccess(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Fn.logD("onErrorResponse", String.valueOf(error));
-                ErrorDialog(Constants.Title.NETWORK_ERROR, Constants.Message.NETWORK_ERROR);
-            }
-        }){
-            @Override
-            protected HashMap<String,String> getParams(){
-                return hMap;
-            }
-        };
-        stringRequest.setTag(TAG);
-        Fn.addToRequestQue(requestQueue, stringRequest, getActivity());
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Fn.logD("onErrorResponse", String.valueOf(error));
+                    ErrorDialog(Constants.Title.NETWORK_ERROR, Constants.Message.NETWORK_ERROR);
+                }
+            }) {
+                @Override
+                protected HashMap<String, String> getParams() {
+                    return hMap;
+                }
+            };
+            stringRequest.setTag(TAG);
+            Fn.addToRequestQue(requestQueue, stringRequest, getActivity());
+        }
     }
     private void setValues(String response){
         Fn.logD("json_string", response);
@@ -164,23 +168,27 @@ public class CustomerEdit extends Fragment{
         boolean ret = true;
         if (!FormValidation.isEmailAddress(email, true)) ret = false;
         if (!FormValidation.isRequired(name,Constants.Config.NAME_FIELD_LENGTH)) ret = false;
-        if(!FormValidation.isRequired(address,Constants.Config.ADDRESS_FIELD_LENGTH)) ret = false;
+        if(!FormValidation.isRequired(address, Constants.Config.ADDRESS_FIELD_LENGTH)) ret = false;
         return ret;
     }
     public void editProfileSuccess(String response){
-        if(!Fn.CheckJsonError(response)){
-            //Intent i = new Intent(getActivity(), RegistrationIntentService.class);
-            //getActivity().startService(i);
-            //Fn.putPreference(getActivity(),"user_token",received_usertoken);
-            Intent intent = new Intent(getActivity(), FullActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        }else{
-            ErrorDialog(Constants.Title.SERVER_ERROR,Constants.Message.SERVER_ERROR);
+        if(getActivity() != null) {
+            if (!Fn.CheckJsonError(response)) {
+                //Intent i = new Intent(getActivity(), RegistrationIntentService.class);
+                //getActivity().startService(i);
+                //Fn.putPreference(getActivity(),"user_token",received_usertoken);
+                Intent intent = new Intent(getActivity(), FullActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            } else {
+                ErrorDialog(Constants.Title.SERVER_ERROR, Constants.Message.SERVER_ERROR);
+            }
         }
     }
     private void ErrorDialog(String Title,String Message){
-        Fn.showDialog(getActivity(), Title, Message);
+        if(getActivity() != null) {
+            Fn.showDialog(getActivity(), Title, Message);
+        }
     }
 
     @Override

@@ -96,7 +96,6 @@ public class Book extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        context = getActivity();
         Fn.logE("BOOK_FRAGMENT_LIFECYCLE", "onCreate Called");
     }
     @Override
@@ -152,7 +151,6 @@ public class Book extends Fragment implements View.OnClickListener {
                 b.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Fn.showProgressDialog(Constants.Message.LOADING,getActivity());
                         vehicle_type =id[(int) (cnt- finalCount)];
 //                        Toast.makeText(context, "vehicle type" + vehicle_type, Toast.LENGTH_LONG).show();
                         mMap.clear();
@@ -169,7 +167,6 @@ public class Book extends Fragment implements View.OnClickListener {
     }
     @Override
     public void onClick(View view) {
-//        Fn.showProgressDialog(Constants.Message.LOADING,getActivity());
         bookNow.setEnabled(false);
         switch (view.getId()) {
             case R.id.book_now:
@@ -195,7 +192,9 @@ public class Book extends Fragment implements View.OnClickListener {
                 transaction.commit();
                 Fn.logD("fragment instanceof Book","homeidentifier != -1");
             }
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.title_book_now_fragment);
+        if(getActivity()!=null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_book_now_fragment);
+        }
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void BookLater() {
@@ -211,44 +210,48 @@ public class Book extends Fragment implements View.OnClickListener {
                 transaction.commit();
                 Fn.logD("fragment instanceof Book","homeidentifier != -1");
             }
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.title_book_later_fragment);
+        if(getActivity()!=null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_book_later_fragment);
+        }
             Fn.logD("BookLater", "BookLater");
     }
     private void setUpMapIfNeeded() {
-    Fn.logD("map_setup", "map_setup");
-    // Do a null check to confirm that we have not already instantiated the map.
-    if (mMap == null) {
-        // Try to obtain the map from the SupportMapFragment.
+        if(getActivity()!=null) {
+            Fn.logD("map_setup", "map_setup");
+            // Do a null check to confirm that we have not already instantiated the map.
+            if (mMap == null) {
+                // Try to obtain the map from the SupportMapFragment.
 //            mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentByTag("MAP_FRAGMENT");
-        Fn.logD("mMapFragment", String.valueOf(mMapFragment));
-        mMap =  mMapFragment.getMap();
-        // Check if we were successful in obtaining the map.
-        Fn.logD("map_not_null", String.valueOf(mMap));
-        if (mMap != null) {
-            if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            mMap.setMyLocationEnabled(true);
-            if(FullActivity.mGoogleApiClient.isConnected()) {
-                Fn.logD("mGoogleApiClient", "true");
-                do{
-                location = Fn.getAccurateCurrentlocation(FullActivity.mGoogleApiClient, getActivity());
-                }while(location == null);
-                if (location != null) {
-                    LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());// This methods gets the users current longitude and latitude.
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));//Moves the camera to users current longitude and latitude
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, Constants.Config.MAP_SMALL_ZOOM_LEVEL));//Animates camera and zooms to preferred state on the user's current location.
+                Fn.logD("mMapFragment", String.valueOf(mMapFragment));
+                mMap = mMapFragment.getMap();
+                // Check if we were successful in obtaining the map.
+                Fn.logD("map_not_null", String.valueOf(mMap));
+                if (mMap != null) {
+                    if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    mMap.setMyLocationEnabled(true);
+                    if (FullActivity.mGoogleApiClient.isConnected()) {
+                        Fn.logD("mGoogleApiClient", "true");
+                        do {
+                            location = Fn.getAccurateCurrentlocation(FullActivity.mGoogleApiClient, getActivity());
+                        } while (location == null);
+                        if (location != null) {
+                            LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());// This methods gets the users current longitude and latitude.
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));//Moves the camera to users current longitude and latitude
+                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, Constants.Config.MAP_SMALL_ZOOM_LEVEL));//Animates camera and zooms to preferred state on the user's current location.
+                        }
+                    }
                 }
             }
         }
-    }
 }
     /**** The mapfragment's id must be removed from the FragmentManager
      **** or else if the same it is passed on the next time then
@@ -278,7 +281,9 @@ public class Book extends Fragment implements View.OnClickListener {
             if(FullActivity.mGoogleApiClient.isConnected()) {
                     Fn.logD("mGoogleApiClient", "true");
                     do{
-                        location = Fn.getAccurateCurrentlocation(FullActivity.mGoogleApiClient, getActivity());
+                        if(getActivity()!=null) {
+                            location = Fn.getAccurateCurrentlocation(FullActivity.mGoogleApiClient, getActivity());
+                        }
                     }while(location == null);
                     if (location != null) {
                         Fn.logD("location_not_null", "location_not_null");
@@ -327,7 +332,9 @@ public class Book extends Fragment implements View.OnClickListener {
             }
         };
         stringRequest.setTag(TAG);
-        Fn.addToRequestQue(requestQueue, stringRequest, getActivity());
+        if(getActivity()!=null) {
+            Fn.addToRequestQue(requestQueue, stringRequest, getActivity());
+        }
     }
     public void vehicleFindSuccess(String response) {
         if(cached_json_response != response){
@@ -400,19 +407,21 @@ public class Book extends Fragment implements View.OnClickListener {
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
+        if(getActivity()!=null) {
+            switch (requestCode) {
 // Check for the integer request code originally supplied to startResolutionForResult().
-            case REQUEST_CHECK_SETTINGS:
-                switch (resultCode) {
-                    case Activity.RESULT_OK:
+                case REQUEST_CHECK_SETTINGS:
+                    switch (resultCode) {
+                        case Activity.RESULT_OK:
 //                        startLocationUpdates();
 //                        TimerProgramm();
-                        break;
-                    case Activity.RESULT_CANCELED:
-                        Fn.showGpsAutoEnableRequest(FullActivity.mGoogleApiClient, getActivity());//keep asking if imp or do whatever
-                        break;
-                }
-                break;
+                            break;
+                        case Activity.RESULT_CANCELED:
+                            Fn.showGpsAutoEnableRequest(FullActivity.mGoogleApiClient, getActivity());//keep asking if imp or do whatever
+                            break;
+                    }
+                    break;
+            }
         }
     }
     @Override

@@ -91,38 +91,41 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        Fn.logD("BOOKING_DETAILS_FRAGMENT_LIFECYCLE", "onCreateView Called");
-        if((getActivity().getIntent()!=null)&&(getActivity().getIntent().getExtras()!=null)) {
-            Fn.logD("getActivity().getIntent().getExtras()","getActivity().getIntent().getExtras()");
-            Bundle bundle = getActivity().getIntent().getExtras();
-            crn_no = Fn.getValueFromBundle(bundle,"crn_no");
-            Fn.logD("received_crn_no_intent",crn_no);
-            getActivity().getIntent().setData(null);
-            getActivity().setIntent(null);
-        }else if(this.getArguments()!=null){
-            Fn.logD("getArguments","getArguments");
-            Bundle bundle = this.getArguments();
-            crn_no = Fn.getValueFromBundle(bundle,"crn_no");
-            Fn.logD("received_crn_no_argument",crn_no);
-
-        }
-        Fn.logD("bundle_crn_no", crn_no);
-        Fn.SystemPrintLn(crn_no);
-//        Fn.logD("booking_status_url",booking_status_url);
         view = inflater.inflate(R.layout.fragment_booking_details, container, false);
-        map_view = (LinearLayout) view.findViewById(R.id.map_view);
-        map = (LinearLayout) view.findViewById(R.id.map);
-        location_datetime = (TextView) view.findViewById(R.id.location_datetime);
-        driver_image = (ImageView) view.findViewById(R.id.driver_image);
-        callButton = (Button) view.findViewById(R.id.driver_mobile_no);
-        callButton.setOnClickListener(this);
-        dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog);
-        dialog.setCancelable(true);
-        popup=(ImageView)dialog.findViewById(R.id.image_popup);
-        Fn.logD("Map Added", "Map Added");
+        if(getActivity()!=null) {
+            // Inflate the layout for this fragment
+            Fn.logD("BOOKING_DETAILS_FRAGMENT_LIFECYCLE", "onCreateView Called");
+            if ((getActivity().getIntent() != null) && (getActivity().getIntent().getExtras() != null)) {
+                Fn.logD("getActivity().getIntent().getExtras()", "getActivity().getIntent().getExtras()");
+                Bundle bundle = getActivity().getIntent().getExtras();
+                crn_no = Fn.getValueFromBundle(bundle, "crn_no");
+                Fn.logD("received_crn_no_intent", crn_no);
+                getActivity().getIntent().setData(null);
+                getActivity().setIntent(null);
+            } else if (this.getArguments() != null) {
+                Fn.logD("getArguments", "getArguments");
+                Bundle bundle = this.getArguments();
+                crn_no = Fn.getValueFromBundle(bundle, "crn_no");
+                Fn.logD("received_crn_no_argument", crn_no);
+
+            }
+            Fn.logD("bundle_crn_no", crn_no);
+            Fn.SystemPrintLn(crn_no);
+//        Fn.logD("booking_status_url",booking_status_url);
+
+            map_view = (LinearLayout) view.findViewById(R.id.map_view);
+            map = (LinearLayout) view.findViewById(R.id.map);
+            location_datetime = (TextView) view.findViewById(R.id.location_datetime);
+            driver_image = (ImageView) view.findViewById(R.id.driver_image);
+            callButton = (Button) view.findViewById(R.id.driver_mobile_no);
+            callButton.setOnClickListener(this);
+            dialog = new Dialog(getActivity());
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.dialog);
+            dialog.setCancelable(true);
+            popup = (ImageView) dialog.findViewById(R.id.image_popup);
+            Fn.logD("Map Added", "Map Added");
+        }
         return view;
     }
 
@@ -130,15 +133,17 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Fn.logD("BOOKING_DETAILS_FRAGMENT_LIFECYCLE", "onViewCreated Called");
         super.onViewCreated(view, savedInstanceState);
-        mMapFragment = SupportMapFragment.newInstance();
-        getChildFragmentManager().beginTransaction().replace(R.id.map, mMapFragment, "MAP_FRAGMENT").commit();
-        String booking_status_url = Constants.Config.ROOT_PATH+"get_booking_status";
-        Fn.logD("booking_status_url", booking_status_url);
-        HashMap<String,String> hashMap= new HashMap<String,String>();
-        String user_token = Fn.getPreference(getActivity(),"user_token");
-        hashMap.put("crn_no", crn_no);
-        hashMap.put("user_token", user_token);
-        sendVolleyRequest(booking_status_url, Fn.checkParams(hashMap), "booking_status");
+        if(getActivity()!=null) {
+            mMapFragment = SupportMapFragment.newInstance();
+            getChildFragmentManager().beginTransaction().replace(R.id.map, mMapFragment, "MAP_FRAGMENT").commit();
+            String booking_status_url = Constants.Config.ROOT_PATH + "get_booking_status";
+            Fn.logD("booking_status_url", booking_status_url);
+            HashMap<String, String> hashMap = new HashMap<String, String>();
+            String user_token = Fn.getPreference(getActivity(), "user_token");
+            hashMap.put("crn_no", crn_no);
+            hashMap.put("user_token", user_token);
+            sendVolleyRequest(booking_status_url, Fn.checkParams(hashMap), "booking_status");
+        }
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -165,7 +170,9 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
             @Override
             public void onErrorResponse(VolleyError error) {
                 Fn.logD("onErrorResponse", String.valueOf(error));
-                Fn.ToastShort(getActivity(), Constants.Message.NETWORK_ERROR);
+                if(getActivity()!=null) {
+                    Fn.ToastShort(getActivity(), Constants.Message.NETWORK_ERROR);
+                }
             }
         }){
             @Override
@@ -176,9 +183,10 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
         stringRequest.setTag(TAG);
         Fn.addToRequestQue(requestQueue, stringRequest, getActivity());
     }
-    protected void bookingStatusSuccess(String response){
+    protected void bookingStatusSuccess(String response) {
+        if(getActivity()!=null) {
         Fn.logD("BOOKING_DETAILS_FRAGMENT_LIFECYCLE", "bookingStatusSuccess Called");
-        if(!Fn.CheckJsonError(response)){
+        if (!Fn.CheckJsonError(response)) {
 //            Fn.logD("bookingStatusSuccess", "bookingStatusSuccess Called");
             Fn.logD("received_json", response);
             JSONObject jsonObject;
@@ -186,40 +194,35 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
             try {
                 jsonObject = new JSONObject(response);
                 String errFlag = jsonObject.getString("errFlag");
-                if(errFlag.equals("1")){
-                    Fn.logD("toastNotdone","toastNotdone");
-                }
-                else if(errFlag.equals("0"))
-                {
-                    TextView textView=new TextView(getActivity());
+                if (errFlag.equals("1")) {
+                    Fn.logD("toastNotdone", "toastNotdone");
+                } else if (errFlag.equals("0")) {
+                    TextView textView = new TextView(getActivity());
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT);
                     textView.setLayoutParams(layoutParams);
                     textView.setId(R.id.large_text);
-                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,getResources().getDimensionPixelSize(R.dimen.large_text_size));
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.large_text_size));
                     textView.setGravity(Gravity.CENTER);
-                    if(jsonObject.has("likes"))
-                    {
+                    if (jsonObject.has("likes")) {
                         jsonArray = jsonObject.getJSONArray("likes");
                         int count = 0;
-                        while (count < jsonArray.length())
-                        {
+                        while (count < jsonArray.length()) {
                             Fn.logD("likes_entered", "likes_entered");
                             JSONObject JO = jsonArray.getJSONObject(count);
                             String received_is_cancelled = JO.getString("is_cancelled");
-                            String received_is_active= JO.getString("is_active");
+                            String received_is_active = JO.getString("is_active");
                             String booked_vehicle_id = JO.getString("booked_vehicle_id");
-                            Fn.logD("received_is_cancelled",received_is_cancelled);
-                            Fn.logD("received_is_active",received_is_active);
-                            if(received_is_cancelled.equals("0")&&received_is_active.equals("1")&&(!booked_vehicle_id.equals("0")))
-                            {
+                            Fn.logD("received_is_cancelled", received_is_cancelled);
+                            Fn.logD("received_is_active", received_is_active);
+                            if (received_is_cancelled.equals("0") && received_is_active.equals("1") && (!booked_vehicle_id.equals("0"))) {
                                 LinearLayout location_found_view = (LinearLayout) view.findViewById(R.id.location_found);
-                                Fn.logD("FUTURE_BOOKING_FRAGMENT_LIFECYCLE","driver_found");
+                                Fn.logD("FUTURE_BOOKING_FRAGMENT_LIFECYCLE", "driver_found");
                                 LinearLayout driver_found_view = (LinearLayout) view.findViewById(R.id.driver_found);
 //                                Button driver_mobile_no_view = (Button) view.findViewById(R.id.driver_mobile_no);
                                 TextView driver_name_view = (TextView) view.findViewById(R.id.driver_name);
                                 received_driver_token = JO.getString("driver_token");
-                                Fn.putPreference(getActivity(),"driver_token",received_driver_token);
+                                Fn.putPreference(getActivity(), "driver_token", received_driver_token);
 //                                received_driver_vehicle_no = JO.getString("driver_vehicle_no");
                                 String received_driver_name = JO.getString("driver_name");
                                 String received_driver_mobile_no = JO.getString("driver_mobile_no");
@@ -227,11 +230,11 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
                                 received_driver_current_lat = JO.getString("driver_location_lat");
                                 received_driver_current_lng = JO.getString("driver_location_lng");
                                 String driver_profile_pic = JO.getString("driver_profile_pic_url");
-                                String profile_pic_url = Constants.Config.ROOT_PATH+driver_profile_pic;
+                                String profile_pic_url = Constants.Config.ROOT_PATH + driver_profile_pic;
                                 Fn.logD("profile_pic_url", profile_pic_url);
-                                if(driver_profile_pic.length()>0){
+                                if (driver_profile_pic.length() > 0) {
                                     downloadBitmapFromURL(profile_pic_url);
-                                }else{
+                                } else {
                                     driver_image.setImageResource(R.drawable.addcontact);
                                     driver_image.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -243,9 +246,9 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
                                 }
 //                                Fn.logD("received_driver_current_lat", received_driver_current_lat);
 //                                Fn.logD("received_driver_current_lng", received_driver_current_lng);
-                                location_datetime.setText("Last Seen: "+Fn.getDateName(received_driver_location_datetime));
+                                location_datetime.setText("Last Seen: " + Fn.getDateName(received_driver_location_datetime));
                                 location_found_view.setVisibility(View.VISIBLE);
-                                driver_name_view.setText("Driver: "+received_driver_name);
+                                driver_name_view.setText("Driver: " + received_driver_name);
                                 callButton.setText(received_driver_mobile_no);
                                 driver_found_view.setVisibility(View.VISIBLE);
                                 location_found_view.setVisibility(View.VISIBLE);
@@ -253,19 +256,15 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
                                 map_view.setVisibility(View.GONE);
                                 setUpMapIfNeeded();
                                 TimerProgramm();
-                            }
-                            else
-                            {
-                                Fn.logD("vehicle_match",Constants.Message.VEHICLE_ALLOCATION_PENDING);
+                            } else {
+                                Fn.logD("vehicle_match", Constants.Message.VEHICLE_ALLOCATION_PENDING);
                                 textView.setText(Constants.Message.VEHICLE_ALLOCATION_PENDING);
                                 map_view.addView(textView);
                             }
                             count++;
                         }
-                    }
-                    else
-                    {
-                        Fn.logD("vehicle_match",Constants.Message.NO_CURRENT_BOOKING);
+                    } else {
+                        Fn.logD("vehicle_match", Constants.Message.NO_CURRENT_BOOKING);
                         textView.setText(Constants.Message.NO_CURRENT_BOOKING);
                         map_view.addView(textView);
                     }
@@ -273,10 +272,11 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             ErrorDialog(Constants.Title.SERVER_ERROR, Constants.Message.SERVER_ERROR);
 //            Fn.ToastShort(getActivity(), Constants.Message.NETWORK_ERROR);
         }
+    }
     }
     protected void vehicleLocationSuccess(String response){
         Fn.logD("BOOKING_DETAILS_FRAGMENT_LIFECYCLE", "vehicleLocationSuccess Called");
@@ -319,7 +319,9 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
                 e.printStackTrace();
             }
         }else{
-            Fn.ToastShort(getActivity(), Constants.Message.SERVER_ERROR);
+            if(getActivity()!=null) {
+                Fn.ToastShort(getActivity(), Constants.Message.SERVER_ERROR);
+            }
         }
     }
     @Override
@@ -351,56 +353,57 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
         }, Constants.Config.GET_DRIVER_LOCATION_DELAY, Constants.Config.GET_DRIVER_LOCATION_PERIOD);
     }
     private void setUpMapIfNeeded() {
-        Fn.logD("setUpMapIfNeeded", "map_setup" + String.valueOf(mMap));
-        // Do a null check to confirm that we have not already instantiated the map.
-        if(mMap != null)
-        {
-            mMap.clear();
-            mMap = null;
-        }
-        if (mMap == null) {
+        if(getActivity() != null) {
+            Fn.logD("setUpMapIfNeeded", "map_setup" + String.valueOf(mMap));
+            // Do a null check to confirm that we have not already instantiated the map.
+            if (mMap != null) {
+                mMap.clear();
+                mMap = null;
+            }
+            if (mMap == null) {
 //            Try to obtain the map from the SupportMapFragment.
 //            mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentByTag("MAP_FRAGMENT");
-            Fn.logD("mMapFragment", String.valueOf(mMapFragment));
-            mMap = mMapFragment.getMap();
-            Fn.logD("map_not_null", String.valueOf(mMap));
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
+                Fn.logD("mMapFragment", String.valueOf(mMapFragment));
+                mMap = mMapFragment.getMap();
+                Fn.logD("map_not_null", String.valueOf(mMap));
+                // Check if we were successful in obtaining the map.
+                if (mMap != null) {
 
-                if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                mMap.setMyLocationEnabled(true);
-                if(FullActivity.mGoogleApiClient.isConnected()) {
-                    do{
-                    location = Fn.getAccurateCurrentlocation(FullActivity.mGoogleApiClient, getActivity());
-                    }while(location == null);
-                    if (location != null) {
-                        double current_lat = location.getLatitude();
-                        double current_lng = location.getLongitude();
-                        LatLng latlng = new LatLng(Double.parseDouble(received_driver_current_lat), Double.parseDouble(received_driver_current_lng));// This methods gets the users current longitude and latitude.
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));//Moves the camera to users current longitude and latitude
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, Constants.Config.MAP_HIGH_ZOOM_LEVEL));//Animates camera and zooms to preferred state on the user's current location.
-                        Fn.logD("received_driver_current_lat", received_driver_current_lat);
-                        Fn.logD("received_driver_current_lng", received_driver_current_lng);
+                    if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    mMap.setMyLocationEnabled(true);
+                    if (FullActivity.mGoogleApiClient.isConnected()) {
+                        do {
+                            location = Fn.getAccurateCurrentlocation(FullActivity.mGoogleApiClient, getActivity());
+                        } while (location == null);
+                        if (location != null) {
+                            double current_lat = location.getLatitude();
+                            double current_lng = location.getLongitude();
+                            LatLng latlng = new LatLng(Double.parseDouble(received_driver_current_lat), Double.parseDouble(received_driver_current_lng));// This methods gets the users current longitude and latitude.
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));//Moves the camera to users current longitude and latitude
+                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, Constants.Config.MAP_HIGH_ZOOM_LEVEL));//Animates camera and zooms to preferred state on the user's current location.
+                            Fn.logD("received_driver_current_lat", received_driver_current_lat);
+                            Fn.logD("received_driver_current_lng", received_driver_current_lng);
 
-                        try {
-                            mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(received_driver_current_lat), Double.parseDouble(received_driver_current_lng))).title("Driver"));
+                            try {
+                                mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(received_driver_current_lat), Double.parseDouble(received_driver_current_lng))).title("Driver"));
 //                                mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble("22.6256"), Double.parseDouble("88.3576"))).title("Driver"));
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
+                            String url = makeURL(received_driver_current_lat, received_driver_current_lng, String.valueOf(current_lat), String.valueOf(current_lng));
+                            Log.d("made_url", url);
+                            HashMap<String, String> hashMap = new HashMap<String, String>();
+                            sendVolleyRequest(url, Fn.checkParams(hashMap), "draw_path");
                         }
-                        String url = makeURL(received_driver_current_lat, received_driver_current_lng, String.valueOf(current_lat), String.valueOf(current_lng));
-                        Log.d("made_url", url);
-                        HashMap<String,String> hashMap = new HashMap<String,String>();
-                        sendVolleyRequest(url, Fn.checkParams(hashMap), "draw_path");
                     }
                 }
             }
@@ -419,7 +422,7 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
             urlString.append(",");
             urlString.append(URLEncoder.encode(destLng,"UTF-8"));
             urlString.append("&sensor=false&mode=driving&alternatives=true");
-            urlString.append("&key="+URLEncoder.encode(getResources().getString(R.string.server_APIkey1), "UTF-8"));
+            urlString.append("&key=" + URLEncoder.encode(getResources().getString(R.string.server_APIkey1), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -449,8 +452,10 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
             JSONObject duration = legs.getJSONObject("duration");
             String duration_min  = duration.getString("text");
 //                      Fn.logD("distance_km",distance_km);
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("");
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(duration_min + " ( " + distance_km + " ) ");
+            if(getActivity() != null) {
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(duration_min + " ( " + distance_km + " ) ");
+            }
             Fn.logD("PolyLine Added", "PolyLineAdded");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -488,45 +493,51 @@ public class BookingDetails extends Fragment implements View.OnClickListener{
         return poly;
     }
     private void ErrorDialog(String Title,String Message){
-        Fn.showDialog(getActivity(), Title, Message);
+        if(getActivity() != null) {
+            Fn.showDialog(getActivity(), Title, Message);
+        }
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
+        if(getActivity() != null) {
+            switch (requestCode) {
 // Check for the integer request code originally supplied to startResolutionForResult().
-            case REQUEST_CHECK_SETTINGS:
-                switch (resultCode) {
-                    case Activity.RESULT_OK:
+                case REQUEST_CHECK_SETTINGS:
+                    switch (resultCode) {
+                        case Activity.RESULT_OK:
 //                        startLocationUpdates();
 //                        TimerProgramm();
-                        break;
-                    case Activity.RESULT_CANCELED:
-                        Fn.showGpsAutoEnableRequest(FullActivity.mGoogleApiClient, getActivity());//keep asking if imp or do whatever
-                        break;
-                }
-                break;
+                            break;
+                        case Activity.RESULT_CANCELED:
+                            Fn.showGpsAutoEnableRequest(FullActivity.mGoogleApiClient, getActivity());//keep asking if imp or do whatever
+                            break;
+                    }
+                    break;
+            }
         }
     }
     protected void downloadBitmapFromURL(String profile_pic_url){
+        if(getActivity() != null) {
 //        RequestQueue requestQueue;
-        final Bitmap[] return_param = new Bitmap[1];
-        ImageRequest imageRequest = new ImageRequest(profile_pic_url, new Response.Listener<Bitmap>() {
-            @Override
-            public void onResponse(final Bitmap response) {
-                driver_image.setImageBitmap(response);
-                driver_image.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popup.setImageBitmap(response);
-                        dialog.show();
-                    }
-                });
+            final Bitmap[] return_param = new Bitmap[1];
+            ImageRequest imageRequest = new ImageRequest(profile_pic_url, new Response.Listener<Bitmap>() {
+                @Override
+                public void onResponse(final Bitmap response) {
+                    driver_image.setImageBitmap(response);
+                    driver_image.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            popup.setImageBitmap(response);
+                            dialog.show();
+                        }
+                    });
 //                driverimage = response;
-            }
-        }, 0, 0, null, null);
-        imageRequest.setTag(TAG);
-        Fn.addToRequestQue(requestQueue, imageRequest, getActivity()
-        );
+                }
+            }, 0, 0, null, null);
+            imageRequest.setTag(TAG);
+            Fn.addToRequestQue(requestQueue, imageRequest, getActivity()
+            );
+        }
     }
     @Override
     public void onStart() {
